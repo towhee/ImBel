@@ -1,0 +1,2 @@
+Move insertChild et al to treemodel.cpp
+Rename node to index in fileterJustTemplates

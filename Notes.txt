@@ -1,0 +1,20 @@
+﻿***************************************************************************
+Custom stylesheet editing
+***************************************************************************
+in case anyone want to know how to do this at runtime inside constructor..
+it took me quite a while to figure this one out…
+so do this inside your Widget/Frame constructor:
+
+this->setProperty(“class”, QString(“TestWidget”));
+
+and later you can do this:
+this->setStyleSheet(“*.TestWidget { background-color: darkgrey } “);
+
+MainWindow:
+font: 9pt "Comic Sans MS";
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(128, 128, 128, 255), stop:1 rgba(210, 210, 210, 255));
+
+TreeViewTemplate
+
+background-color: rgb(190, 190, 190);
+alternate-background-color: rgb(176, 176, 176);

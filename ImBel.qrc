@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ImBel.txt</file>
+        <file>Hummer32.png</file>
+        <file>Hummer1000.jpg</file>
+        <file>Hummer2.png</file>
+        <file>ImBel.png</file>
+    </qresource>
+</RCC>
