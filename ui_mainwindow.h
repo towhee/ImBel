@@ -43,6 +43,11 @@ public:
     QAction *action_Run_test;
     QAction *actionAnother;
     QAction *actionShow_Templates;
+    QAction *actionShow_model_in_tree;
+    QAction *actionAdd_a_new_border;
+    QAction *actionAdd_a_new_text;
+    QAction *actionAdd_a_new_shape;
+    QAction *actionAdd_a_new_graphic;
     QWidget *centralwidget;
     QHBoxLayout *horizontalLayout_2;
     QGraphicsView *graphicsView;
@@ -93,6 +98,16 @@ public:
         actionShow_Templates = new QAction(MainWindow);
         actionShow_Templates->setObjectName(QStringLiteral("actionShow_Templates"));
         actionShow_Templates->setCheckable(true);
+        actionShow_model_in_tree = new QAction(MainWindow);
+        actionShow_model_in_tree->setObjectName(QStringLiteral("actionShow_model_in_tree"));
+        actionAdd_a_new_border = new QAction(MainWindow);
+        actionAdd_a_new_border->setObjectName(QStringLiteral("actionAdd_a_new_border"));
+        actionAdd_a_new_text = new QAction(MainWindow);
+        actionAdd_a_new_text->setObjectName(QStringLiteral("actionAdd_a_new_text"));
+        actionAdd_a_new_shape = new QAction(MainWindow);
+        actionAdd_a_new_shape->setObjectName(QStringLiteral("actionAdd_a_new_shape"));
+        actionAdd_a_new_graphic = new QAction(MainWindow);
+        actionAdd_a_new_graphic->setObjectName(QStringLiteral("actionAdd_a_new_graphic"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         horizontalLayout_2 = new QHBoxLayout(centralwidget);
@@ -209,7 +224,7 @@ public:
         treeViewTemplate->setFrameShadow(QFrame::Plain);
         treeViewTemplate->setLineWidth(0);
         treeViewTemplate->setAlternatingRowColors(true);
-        treeViewTemplate->setIndentation(10);
+        treeViewTemplate->setIndentation(20);
         treeViewTemplate->setRootIsDecorated(false);
         treeViewTemplate->header()->setDefaultSectionSize(150);
 
@@ -226,6 +241,12 @@ public:
         menubar->addAction(menu_Test->menuAction());
         menubar->addAction(menu_View->menuAction());
         fileMenu->addAction(exitAction);
+        actionsMenu->addSeparator();
+        actionsMenu->addAction(actionAdd_a_new_border);
+        actionsMenu->addAction(actionAdd_a_new_text);
+        actionsMenu->addAction(actionAdd_a_new_shape);
+        actionsMenu->addAction(actionAdd_a_new_graphic);
+        actionsMenu->addSeparator();
         actionsMenu->addAction(insertRowAction);
         actionsMenu->addAction(insertColumnAction);
         actionsMenu->addSeparator();
@@ -236,10 +257,12 @@ public:
         menu_Test->addAction(action_Run_test);
         menu_Test->addAction(actionAnother);
         menu_View->addAction(actionShow_Templates);
+        menu_View->addAction(actionShow_model_in_tree);
 
         retranslateUi(MainWindow);
         QObject::connect(action_Run_test, SIGNAL(triggered()), MainWindow, SLOT(RunTest()));
         QObject::connect(actionShow_Templates, SIGNAL(triggered()), MainWindow, SLOT(toggleViewTemplateWidget()));
+        QObject::connect(actionShow_model_in_tree, SIGNAL(triggered()), MainWindow, SLOT(showModelInTree()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -264,6 +287,11 @@ public:
         actionAnother->setText(QApplication::translate("MainWindow", "Another", 0));
         actionShow_Templates->setText(QApplication::translate("MainWindow", "Show &Templates", 0));
         actionShow_Templates->setShortcut(QApplication::translate("MainWindow", "Ctrl+T", 0));
+        actionShow_model_in_tree->setText(QApplication::translate("MainWindow", "Show model in tree", 0));
+        actionAdd_a_new_border->setText(QApplication::translate("MainWindow", "Add a new border", 0));
+        actionAdd_a_new_text->setText(QApplication::translate("MainWindow", "Add a new text", 0));
+        actionAdd_a_new_shape->setText(QApplication::translate("MainWindow", "Add a new shape", 0));
+        actionAdd_a_new_graphic->setText(QApplication::translate("MainWindow", "Add a new graphic", 0));
         fileMenu->setTitle(QApplication::translate("MainWindow", "&File", 0));
         actionsMenu->setTitle(QApplication::translate("MainWindow", "&Actions", 0));
         menu_Test->setTitle(QApplication::translate("MainWindow", "&Test", 0));

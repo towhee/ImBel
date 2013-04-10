@@ -1,0 +1,116 @@
+Level	Object	SubObject	Property	IndexCode	Delegate	Help tip
+3	File	Dimension	Width	FileWidth	Text	Fit in this width including any borders 
+3	File	Dimension	Height	FileHeight	Text	Fit in this height including any borders
+3	File	N/A	Sharpen amount	FileSharpen amount	Slider	Apply post resizing sharpening only to the image
+3	File	N/A	File type	FileFile type	Combobox	Select the file type to save
+3	File	N/A	Compression	FileCompression	Slider	Select the file compression - this only applies to JPG files
+3	File	N/A	Colorspace	FileColorspace	Combobox	Select the file color space - if unclear choose sRGB
+3	File	N/A	File location logic	FileFile location logic	Combobox	Select absolute if you know the folder or relative if you want to put in a subfolder of the originating file
+3	File	N/A	Folder name	FileFolder name	Text and button	The absolute path or the relative folder name
+3	File	N/A	File suffix	FileFile suffix	Text	"Add suffix text to the file name ie 0001.jpg -> 0001_800px.jpg where ""_800px is the suffix added"
+3	File	N/A	Overwrite existing files	FileOverwrite existing files	Checkbox	Be careful - do not select this unless you are SURE
+3	Image	N/A	Style	ImageStyle	Combobox	Select a style to be applied to the image - a style is a combination of all the image settings
+3	Image	N/A	Light direction	ImageLight direction	Dial	The light direction affects shadows and bevels
+3	Image	N/A	Light angle	ImageLight angle	Dial	The light angle affects shadows and bevels
+3	Image	N/A	Texture	ImageTexture	Combobox + Button	Select a texture to apply or go build your own 
+3	Image	N/A	Tint color	ImageTint color	Color picker	Select a color to tint the image
+3	Image	N/A	Tint opacity	ImageTint opacity	Slider	Set the opacity of the tint
+4	Image	Outside shadow	Opacity	ImageOutside shadowOpacity	Slider	N/A
+4	Image	Outside shadow	Blend mode	ImageOutside shadowBlend mode	Combobox	N/A
+4	Image	Outside shadow	Distance	ImageOutside shadowDistance	Text	N/A
+4	Image	Outside shadow	Color	ImageOutside shadowColor	Color picker	N/A
+4	Image	Inner shadow	Opacity	ImageInner shadowOpacity	Slider	N/A
+4	Image	Inner shadow	Blend mode	ImageInner shadowBlend mode	Combobox	N/A
+4	Image	Inner shadow	Distance	ImageInner shadowDistance	Slider	N/A
+4	Image	Inner shadow	Color	ImageInner shadowColor	Color picker	N/A
+4	Image	Outer glow	Blend mode	ImageOuter glowBlend mode	Combobox	N/A
+4	Image	Outer glow	Opacity	ImageOuter glowOpacity	Slider	N/A
+4	Image	Outer glow	Fade	ImageOuter glowFade	Slider	N/A
+4	Image	Outer glow	Distance	ImageOuter glowDistance	Slider	N/A
+4	Image	Inner glow	Blend mode	ImageInner glowBlend mode	Combobox	N/A
+4	Image	Inner glow	Opacity	ImageInner glowOpacity	Slider	N/A
+4	Image	Inner glow	Fade	ImageInner glowFade	Slider	N/A
+4	Image	Inner glow	Distance	ImageInner glowDistance	Slider	N/A
+4	Image	Bevel	Type	ImageBevelType	Combobox	N/A
+4	Image	Bevel	Contour	ImageBevelContour	Combobox + Button	N/A
+4	Image	Bevel	Size	ImageBevelSize	Slider	N/A
+4	Image	Bevel	Softness	ImageBevelSoftness	Slider	N/A
+4	Border	N/A	Style	BorderStyle	Combobox	Select a style to be applied to the border - a style is a combination of all the image settings
+4	Border	N/A	Top	BorderTop	Slider	N/A
+4	Border	N/A	Left	BorderLeft	Slider	N/A
+4	Border	N/A	Right	BorderRight	Slider	N/A
+4	Border	N/A	Bottom	BorderBottom	Slider	N/A
+5	Border	Outside shadow	Opacity	BorderOutside shadowOpacity	Slider	N/A
+5	Border	Outside shadow	Blend mode	BorderOutside shadowBlend mode	Combobox	N/A
+5	Border	Outside shadow	Distance	BorderOutside shadowDistance	Text	N/A
+5	Border	Outside shadow	Color	BorderOutside shadowColor	Color picker	N/A
+5	Border	Inner shadow	Opacity	BorderInner shadowOpacity	Slider	N/A
+5	Border	Inner shadow	Blend mode	BorderInner shadowBlend mode	Combobox	N/A
+5	Border	Inner shadow	Distance	BorderInner shadowDistance	Slider	N/A
+5	Border	Inner shadow	Color	BorderInner shadowColor	Color picker	N/A
+5	Border	Outer glow	Blend mode	BorderOuter glowBlend mode	Combobox	N/A
+5	Border	Outer glow	Opacity	BorderOuter glowOpacity	Slider	N/A
+5	Border	Outer glow	Fade	BorderOuter glowFade	Slider	N/A
+5	Border	Outer glow	Distance	BorderOuter glowDistance	Slider	N/A
+5	Border	Inner glow	Blend mode	BorderInner glowBlend mode	Combobox	N/A
+5	Border	Inner glow	Opacity	BorderInner glowOpacity	Slider	N/A
+5	Border	Inner glow	Fade	BorderInner glowFade	Slider	N/A
+5	Border	Inner glow	Distance	BorderInner glowDistance	Slider	N/A
+5	Border	Bevel	Type	BorderBevelType	Combobox	N/A
+5	Border	Bevel	Contour	BorderBevelContour	Combobox + Button	N/A
+5	Border	Bevel	Size	BorderBevelSize	Slider	N/A
+5	Border	Bevel	Softness	BorderBevelSoftness	Slider	N/A
+4	Text	N/A	Source	TextSource	Combobox + Button	N/A
+4	Text	N/A	Text	TextText	Text	N/A
+4	Text	N/A	Font	TextFont	Combobox	N/A
+4	Text	N/A	Size	TextSize	Slider	N/A
+4	Text	N/A	Color	TextColor	Color picker	N/A
+4	Text	N/A	Opacity	TextOpacity	Slider	N/A
+4	Text	N/A	Blending mode	TextBlending mode	Combobox	N/A
+5	Text	Halo	Size	TextHaloSize	Slider	N/A
+5	Text	Halo	Color	TextHaloColor	Color picker	N/A
+5	Text	Halo	Opacity	TextHaloOpacity	Slider	N/A
+5	Text	Halo	Fade	TextHaloFade	Slider	N/A
+5	Text	Shadow	Opacity	TextShadowOpacity	Slider	N/A
+5	Text	Shadow	Blend mode	TextShadowBlend mode	Combobox	N/A
+5	Text	Shadow	Distance	TextShadowDistance	Slider	N/A
+5	Text	Shadow	Color	TextShadowColor	Color picker	N/A
+5	Text	Location	Reference object	TextLocationReference object	Combobox	N/A
+5	Text	Location	Reference portion	TextLocationReference portion	Combobox	N/A
+5	Text	Location	Orientation	TextLocationOrientation	Dial	N/A
+5	Text	Location	X	TextLocationX	Text	N/A
+5	Text	Location	Y	TextLocationY	Text	N/A
+5	Text	Location	Anchor from	TextLocationAnchor from	Text	N/A
+5	Text	Location	Anchor to	TextLocationAnchor to	Text	N/A
+5	Text	Location	Orientation	TextLocationOrientation	Dial	N/A
+4	Shape	N/A	Type	ShapeType	Combobox	N/A
+5	Shape	Locaton	Pt 1 X	ShapeLocatonPt 1 X	Text	N/A
+5	Shape	Locaton	Pt 1 Y	ShapeLocatonPt 1 Y	Text	N/A
+5	Shape	Locaton	Pt 2 X	ShapeLocatonPt 2 X	Text	N/A
+5	Shape	Locaton	Pt 2 Y	ShapeLocatonPt 2 Y	Text	N/A
+5	Shape	Location	Anchor from	ShapeLocationAnchor from	Text	N/A
+5	Shape	Location	Anchor to	ShapeLocationAnchor to	Text	N/A
+5	Shape	Line	Type	ShapeLineType	Combobox	N/A
+5	Shape	Line	Width	ShapeLineWidth	Slider	N/A
+5	Shape	Line	Color	ShapeLineColor	Color picker	N/A
+5	Shape	Line	Opacity	ShapeLineOpacity	Slider	N/A
+5	Shape	Line	Texture	ShapeLineTexture	Combobox + Button	N/A
+5	Shape	Halo	Size	ShapeHaloSize	Slider	N/A
+5	Shape	Halo	Color	ShapeHaloColor	Color picker	N/A
+5	Shape	Halo	Opacity	ShapeHaloOpacity	Slider	N/A
+5	Shape	Halo	Fade	ShapeHaloFade	Slider	N/A
+5	Shape	Shadow	Opacity	ShapeShadowOpacity	Slider	N/A
+5	Shape	Shadow	Blend mode	ShapeShadowBlend mode	Combobox	N/A
+5	Shape	Shadow	Distance	ShapeShadowDistance	Slider	N/A
+5	Shape	Shadow	Color	ShapeShadowColor	Color picker	N/A
+5	Shape	Fill	Color	ShapeFillColor	Color picker	N/A
+5	Shape	Fill	Opacity	ShapeFillOpacity	Slider	N/A
+5	Shape	Fill	Texture	ShapeFillTexture	Combobox + Button	N/A
+4	Graphic	N/A	File	GraphicFile	Text + button	N/A
+4	Graphic	N/A	Opacity	GraphicOpacity	Slider	N/A
+4	Graphic	N/A	Blend mode	GraphicBlend mode	Combobox	N/A
+5	Graphic	Location	X	GraphicLocationX	Text	N/A
+5	Graphic	Location	Y	GraphicLocationY	Text	N/A
+5	Graphic	Location	Anchor from	GraphicLocationAnchor from	Text	N/A
+5	Graphic	Location	Anchor to	GraphicLocationAnchor to	Text	N/A
+5	Graphic	Location	Orientation	GraphicLocationOrientation	Dial	N/A

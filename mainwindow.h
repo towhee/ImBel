@@ -48,9 +48,6 @@
 #include <QStringListModel>
 
 class DataModel;
-//QT_BEGIN_NAMESPACE
-//class QTreeView;
-//QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -67,7 +64,6 @@ private:
     void filterJustTemplates(const QModelIndex &node);
     DataModel* dModel;
 
-
 public slots:
     void updateActions();
     void RunTest();
@@ -81,7 +77,8 @@ private slots:
     void on_comboBoxTemplates_currentIndexChanged(const QString &arg1);
     void on_treeViewTemplate_clicked(const QModelIndex &index);
     void toggleViewTemplateWidget();
-
+    void addTemplate();
+    void showModelInTree();
 };
 
 #endif // MAINWINDOW_H

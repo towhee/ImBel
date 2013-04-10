@@ -38,68 +38,37 @@
 **
 ****************************************************************************/
 
-#ifndef TREEMODEL_H
-#define TREEMODEL_H
+#ifndef DATAITEM_H
+#define DATAITEM_H
 
-#include <QAbstractItemModel>
-#include <QModelIndex>
+#include <QList>
 #include <QVariant>
-
-class TreeItem;
+#include <QVector>
 
 //! [0]
-class TreeModel : public QAbstractItemModel
+class DataItemItem
 {
-    Q_OBJECT
-
 public:
-    TreeModel(const QStringList &headers, const QString &data,
-              QObject *parent = 0);
-    ~TreeModel();
-//! [0] //! [1]
+    explicit DataItemItem(const QVector<QVariant> &data, DataItemItem *parent = 0);
+    ~DataItemItem();
 
-    QVariant data(const QModelIndex &index, int role) const;
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const;
-
-    QModelIndex index(int row, int column,
-                      const QModelIndex &parent = QModelIndex()) const;
-    QModelIndex parent(const QModelIndex &index) const;
-
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
-//! [1]
-
-//! [2]
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-    bool setData(const QModelIndex &index, const QVariant &value,
-                 int role = Qt::EditRole);
-    bool setHeaderData(int section, Qt::Orientation orientation,
-                       const QVariant &value, int role = Qt::EditRole);
-
-    bool insertColumns(int position, int columns,
-                       const QModelIndex &parent = QModelIndex());
-    bool removeColumns(int position, int columns,
-                       const QModelIndex &parent = QModelIndex());
-    bool insertRows(int position, int rows,
-                    const QModelIndex &parent = QModelIndex());
-    bool removeRows(int position, int rows,
-                    const QModelIndex &parent = QModelIndex());
+    DataItemItem *child(int number);
+    int childCount() const;
+    int columnCount() const;
+    QVariant data(int column) const;
+    bool insertChildren(int position, int count, int columns);
+    bool insertColumns(int position, int columns);
+    DataItemItem *parent();
+    bool removeChildren(int position, int count);
+    bool removeColumns(int position, int columns);
+    int childNumber() const;
+    bool setData(int column, const QVariant &value);
 
 private:
-    void setupModelData(const QStringList &lines, TreeItem *parent);
-    TreeItem *getItem(const QModelIndex &index) const;
-
-    TreeItem *rootItem;
-
-public slots:
-    void insertChild();
-    bool insertColumn(const QModelIndex &parent = QModelIndex());
-    void insertRow();
-    bool removeColumn(const QModelIndex &parent = QModelIndex());
-    void removeRow();
-
+    QList<DataItemItem*> childItems;
+    QVector<QVariant> itemData;
+    DataItemItem *parentItem;
 };
-//! [2]
+//! [0]
 
-#endif // TREEMODEL_H
+#endif // DATAITEM_H

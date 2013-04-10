@@ -44,12 +44,12 @@
     A container for items of data supplied by the simple tree model.
 */
 
-#include "treeitem.h"
+#include "dataitem.h"
 
 #include <QStringList>
 
 //! [0]
-TreeItem::TreeItem(const QVector<QVariant> &data, TreeItem *parent)
+DataItemItem::DataItemItem(const QVector<QVariant> &data, DataItemItem *parent)
 {
     parentItem = parent;
     itemData = data;
@@ -57,59 +57,59 @@ TreeItem::TreeItem(const QVector<QVariant> &data, TreeItem *parent)
 //! [0]
 
 //! [1]
-TreeItem::~TreeItem()
+DataItemItem::~DataItemItem()
 {
     qDeleteAll(childItems);
 }
 //! [1]
 
 //! [2]
-TreeItem *TreeItem::child(int number)
+DataItemItem *DataItemItem::child(int number)
 {
     return childItems.value(number);
 }
 //! [2]
 
 //! [3]
-int TreeItem::childCount() const
+int DataItemItem::childCount() const
 {
     return childItems.count();
 }
 //! [3]
 
 //! [4]
-int TreeItem::childNumber() const
+int DataItemItem::childNumber() const
 {
     if (parentItem)
-        return parentItem->childItems.indexOf(const_cast<TreeItem*>(this));
+        return parentItem->childItems.indexOf(const_cast<DataItemItem*>(this));
 
     return 0;
 }
 //! [4]
 
 //! [5]
-int TreeItem::columnCount() const
+int DataItemItem::columnCount() const
 {
     return itemData.count();
 }
 //! [5]
 
 //! [6]
-QVariant TreeItem::data(int column) const
+QVariant DataItemItem::data(int column) const
 {
     return itemData.value(column);
 }
 //! [6]
 
 //! [7]
-bool TreeItem::insertChildren(int position, int count, int columns)
+bool DataItemItem::insertChildren(int position, int count, int columns)
 {
     if (position < 0 || position > childItems.size())
         return false;
 
     for (int row = 0; row < count; ++row) {
         QVector<QVariant> data(columns);
-        TreeItem *item = new TreeItem(data, this);
+        DataItemItem *item = new DataItemItem(data, this);
         childItems.insert(position, item);
     }
 
@@ -118,7 +118,7 @@ bool TreeItem::insertChildren(int position, int count, int columns)
 //! [7]
 
 //! [8]
-bool TreeItem::insertColumns(int position, int columns)
+bool DataItemItem::insertColumns(int position, int columns)
 {
     if (position < 0 || position > itemData.size())
         return false;
@@ -126,7 +126,7 @@ bool TreeItem::insertColumns(int position, int columns)
     for (int column = 0; column < columns; ++column)
         itemData.insert(position, QVariant());
 
-    foreach (TreeItem *child, childItems)
+    foreach (DataItemItem *child, childItems)
         child->insertColumns(position, columns);
 
     return true;
@@ -134,14 +134,14 @@ bool TreeItem::insertColumns(int position, int columns)
 //! [8]
 
 //! [9]
-TreeItem *TreeItem::parent()
+DataItemItem *DataItemItem::parent()
 {
     return parentItem;
 }
 //! [9]
 
 //! [10]
-bool TreeItem::removeChildren(int position, int count)
+bool DataItemItem::removeChildren(int position, int count)
 {
     if (position < 0 || position + count > childItems.size())
         return false;
@@ -153,7 +153,7 @@ bool TreeItem::removeChildren(int position, int count)
 }
 //! [10]
 
-bool TreeItem::removeColumns(int position, int columns)
+bool DataItemItem::removeColumns(int position, int columns)
 {
     if (position < 0 || position + columns > itemData.size())
         return false;
@@ -161,14 +161,14 @@ bool TreeItem::removeColumns(int position, int columns)
     for (int column = 0; column < columns; ++column)
         itemData.remove(position);
 
-    foreach (TreeItem *child, childItems)
+    foreach (DataItemItem *child, childItems)
         child->removeColumns(position, columns);
 
     return true;
 }
 
 //! [11]
-bool TreeItem::setData(int column, const QVariant &value)
+bool DataItemItem::setData(int column, const QVariant &value)
 {
     if (column < 0 || column >= itemData.size())
         return false;

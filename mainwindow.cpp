@@ -39,7 +39,7 @@
 ****************************************************************************/
 
 #include "mainwindow.h"
-#include "treemodel.h"
+#include "datamodel.h"
 
 #include <QDebug>
 #include <QFile>
@@ -95,14 +95,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateActions();
 
-    RunTest();
+    //RunTest();
 }
 
 void MainWindow::RunTest()
 {
-    qDebug() << "RunTest ... ";
-    QModelIndex modelRootIndex = dModel->index(0,0,QModelIndex());
-    dModel->serializeModelData(modelRootIndex, 0);
+    QModelIndex parent = dModel->addTemplateToModel("New Template");
+    comboBoxTemplates->setCurrentIndex(comboBoxTemplates->model()->rowCount());
+    updateTreeViewTemplates();
+
+//    QModelIndex modelRootIndex = dModel->index(0,0,QModelIndex());
+//    dModel->serializeModelData(modelRootIndex, 0);
 }
 
 void MainWindow::toggleViewTemplateWidget()
@@ -147,6 +150,20 @@ void MainWindow::filterJustTemplates(const QModelIndex &node)
             filterJustTemplates(dModel->index(i,0,node));
         }
     }
+}
+
+void MainWindow::showModelInTree()
+{
+    qDebug() << "showModelInTree";
+    QTreeView *tree = new QTreeView;
+    tree->setModel(dModel);
+    tree->expandAll();
+    tree->resizeColumnToContents(0);
+    tree->resizeColumnToContents(1);
+//    tree->resizeColumnToContents(2);
+    tree->setAlternatingRowColors(true);
+    tree->setMinimumSize(600,800);
+    tree->show();
 }
 
 //void MainWindow::updateTreeViewProperties(const QModelIndex &index)
@@ -282,4 +299,9 @@ void MainWindow::on_treeViewTemplate_clicked(const QModelIndex &index)
 {
     qDebug() << "on_treeViewTemplate_clicked";
 //    updateTreeViewProperties(index);              //Eliminated treeview for now
+}
+
+void MainWindow::addTemplate()
+{
+    dModel->addTemplateToModel("New template");
 }

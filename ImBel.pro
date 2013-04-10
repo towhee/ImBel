@@ -16,14 +16,14 @@ FORMS       = mainwindow.ui
 
 HEADERS     = mainwindow.h \
               ui_mainwindow.h \
-              treeitem.h \
-              treemodel.h
+              dataitem.h \
+              datamodel.h
 
 RESOURCES   = imbel.qrc
 
 SOURCES     = mainwindow.cpp \
-              treeitem.cpp \
-              treemodel.cpp \
+              dataitem.cpp \
+              datamodel.cpp \
               main.cpp
 
 OTHER_FILES += \

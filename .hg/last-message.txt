@@ -1,1 +1,1 @@
-Fiddled with layout, fixed bug in serializeModelData.
+Basic data structure to create new timplates is now working for File and Image

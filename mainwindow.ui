@@ -18,8 +18,7 @@
     <normaloff>:/Hummer32.png</normaloff>:/Hummer32.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-</string>
+   <string notr="true"/>
   </property>
   <property name="dockNestingEnabled">
    <bool>false</bool>
@@ -75,6 +74,12 @@
     <property name="title">
      <string>&amp;Actions</string>
     </property>
+    <addaction name="separator"/>
+    <addaction name="actionAdd_a_new_border"/>
+    <addaction name="actionAdd_a_new_text"/>
+    <addaction name="actionAdd_a_new_shape"/>
+    <addaction name="actionAdd_a_new_graphic"/>
+    <addaction name="separator"/>
     <addaction name="insertRowAction"/>
     <addaction name="insertColumnAction"/>
     <addaction name="separator"/>
@@ -95,6 +100,7 @@
      <string>&amp;View</string>
     </property>
     <addaction name="actionShow_Templates"/>
+    <addaction name="actionShow_model_in_tree"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="actionsMenu"/>
@@ -307,7 +313,7 @@
            <bool>true</bool>
           </property>
           <property name="indentation">
-           <number>10</number>
+           <number>20</number>
           </property>
           <property name="rootIsDecorated">
            <bool>false</bool>
@@ -395,6 +401,31 @@
     <string>Ctrl+T</string>
    </property>
   </action>
+  <action name="actionShow_model_in_tree">
+   <property name="text">
+    <string>Show model in tree</string>
+   </property>
+  </action>
+  <action name="actionAdd_a_new_border">
+   <property name="text">
+    <string>Add a new border</string>
+   </property>
+  </action>
+  <action name="actionAdd_a_new_text">
+   <property name="text">
+    <string>Add a new text</string>
+   </property>
+  </action>
+  <action name="actionAdd_a_new_shape">
+   <property name="text">
+    <string>Add a new shape</string>
+   </property>
+  </action>
+  <action name="actionAdd_a_new_graphic">
+   <property name="text">
+    <string>Add a new graphic</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="imbel.qrc"/>
@@ -432,9 +463,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionShow_model_in_tree</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showModelInTree()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>652</x>
+     <y>481</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>RunTest()</slot>
   <slot>toggleViewTemplateWidget()</slot>
+  <slot>showModelInTree()</slot>
  </slots>
 </ui>
