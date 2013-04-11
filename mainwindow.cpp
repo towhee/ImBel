@@ -77,7 +77,9 @@ MainWindow::MainWindow(QWidget *parent)
     comboBoxTemplates->setRootModelIndex(rootIndex);
     comboBoxTemplates->setCurrentIndex(0);
 
-    updateTreeViewTemplates();
+//    QModelIndex modelRootIndex = dModel->index(0,0,QModelIndex());
+//    QModelIndex treeRootIndex = rootIndex.child(row,0);
+    updateTreeViewTemplates(rootIndex.child(0,0));
 
     connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
@@ -100,57 +102,24 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::RunTest()
 {
+    QRegExp rx("^(Border|Text|Shape|Graphic)$");
+    qDebug() << "Border :  " << (rx.exactMatch("Border"));
+    qDebug() << "Border1:  " << (rx.exactMatch("Border1"));
+
+
     QModelIndex parent = dModel->addTemplateToModel("New Template");
     comboBoxTemplates->setCurrentIndex(comboBoxTemplates->model()->rowCount());
-    updateTreeViewTemplates();
+    updateTreeViewTemplates(parent);
 
 //    QModelIndex modelRootIndex = dModel->index(0,0,QModelIndex());
 //    dModel->serializeModelData(modelRootIndex, 0);
 }
 
-void MainWindow::toggleViewTemplateWidget()
-{
-    if (dockWidgetTemplates->isVisible()) {dockWidgetTemplates->hide();}
-        else dockWidgetTemplates->show();
-}
 
-void MainWindow::updateTreeViewTemplates()
-{
-    int row = comboBoxTemplates->currentIndex();
-//    QAbstractItemModel *treeModel = treeViewTemplate->model();
 
-    QModelIndex modelRootIndex = dModel->index(0,0,QModelIndex());
-    QModelIndex treeRootIndex = modelRootIndex.child(row,0);
 
-    qDebug() << "combo current index: " << row;
-    qDebug() << dModel->data(treeRootIndex, Qt::DisplayRole).toString();
 
-    treeViewTemplate->setRootIndex(treeRootIndex);
-    treeViewTemplate->resizeColumnToContents(0);
-    treeViewTemplate->resizeColumnToContents(1);
-    int columnWidth = treeViewTemplate->columnWidth(0) + 20;
-    treeViewTemplate->setColumnWidth(0, columnWidth);
-    treeViewTemplate->expandAll();
-    //filterJustTemplates(rootIndex);
-}
 
-void MainWindow::filterJustTemplates(const QModelIndex &node)
-{
-    qDebug() << "filterJustTemplates";
-    QRegExp rx("^(Image|Text|Border|Shape|Graphic)[s0-9]{0,3}$");
-    QString nodeText = node.data(Qt::DisplayRole).toString();
-//    qDebug() << nodeText << rx.exactMatch(nodeText);
-    // find out if there are children
-    if (rx.exactMatch(nodeText) == false) {
-        treeViewTemplate->setRowHidden(node.row(), node.parent(), true);
-    }
-    if (dModel->hasChildren()) {
-        // repeat for each child
-        for (int i = 0; i < dModel->rowCount(node); ++i){
-            filterJustTemplates(dModel->index(i,0,node));
-        }
-    }
-}
 
 void MainWindow::showModelInTree()
 {
@@ -160,22 +129,11 @@ void MainWindow::showModelInTree()
     tree->expandAll();
     tree->resizeColumnToContents(0);
     tree->resizeColumnToContents(1);
-//    tree->resizeColumnToContents(2);
+    tree->resizeColumnToContents(2);
     tree->setAlternatingRowColors(true);
     tree->setMinimumSize(600,800);
     tree->show();
 }
-
-//void MainWindow::updateTreeViewProperties(const QModelIndex &index)
-//{
-//    qDebug() << "updateTreeViewProperties";
-//    treeViewProperties->setRootIndex(index);
-//    treeViewProperties->resizeColumnToContents(0);
-//    treeViewProperties->resizeColumnToContents(1);
-//    int columnWidth = treeViewProperties->columnWidth(0) + 20;
-//    treeViewProperties->setColumnWidth(0, columnWidth);
-//    treeViewProperties->expandAll();
-//}
 
 void MainWindow::initImage()
 {
@@ -188,6 +146,112 @@ void MainWindow::initImage()
     graphicsView->show();
 }
 
+//*************************************************************************************
+//  TEMPLATE OPERATIONS
+//*************************************************************************************
+
+void MainWindow::updateTreeViewTemplates(const QModelIndex &treeRootIndex)
+{
+    treeViewTemplate->setRootIndex(treeRootIndex);
+    treeViewTemplate->setRootIsDecorated(true);
+    treeViewTemplate->resizeColumnToContents(0);
+    treeViewTemplate->resizeColumnToContents(1);
+    int columnWidth = treeViewTemplate->columnWidth(0) + 20;
+    treeViewTemplate->setColumnWidth(0, columnWidth);
+    treeViewTemplate->expandAll();
+}
+
+void MainWindow::on_comboBoxTemplates_currentIndexChanged(const QString &arg1)
+{
+    int comboRow = comboBoxTemplates->currentIndex();
+    QModelIndex rootIndex = dModel->index(0,0,QModelIndex());
+    updateTreeViewTemplates(rootIndex.child(comboRow,0));
+}
+
+void MainWindow::on_treeViewTemplate_clicked(const QModelIndex &index)
+{
+    qDebug() << "on_treeViewTemplate_clicked";
+//    updateTreeViewProperties(index);              //Eliminated treeview for now
+}
+
+void MainWindow::addTemplate()
+{
+    QModelIndex parent = dModel->addTemplateToModel("New Template");
+    comboBoxTemplates->setCurrentIndex(comboBoxTemplates->model()->rowCount());
+    updateTreeViewTemplates(parent);
+}
+
+void MainWindow::addObject(QString name)
+{
+    // Get the current template, which will be the current comboBox selection
+    int comboRow = comboBoxTemplates->currentIndex();
+    QModelIndex rootIndex = dModel->index(0,0,QModelIndex());
+    QModelIndex rootTemplate = rootIndex.child(comboRow, 0);
+    // Pass along to datamodel, where childCount can be used
+    dModel->addTemplateObject(rootTemplate, name);
+}
+
+void MainWindow::addBorder()
+{
+    addObject("Border");
+}
+
+void MainWindow::addText()
+{
+    addObject("Text");
+}
+
+void MainWindow::addShape()
+{
+    addObject("Shape");
+}
+
+void MainWindow::addGraphic()
+{
+    addObject("Graphic");
+}
+
+void MainWindow::toggleViewTemplateWidget()
+{
+    if (dockWidgetTemplates->isVisible()) {dockWidgetTemplates->hide();}
+        else dockWidgetTemplates->show();
+}
+
+void MainWindow::filterJustTemplates(const QModelIndex &node)
+{
+/*
+filterJustTemplates() is a recursive tree walker that looks for all tree nodes that
+are values and hides them.  This code has been deprecated for a simpler view of the
+template tree.
+*/
+    qDebug() << "filterJustTemplates";
+    QRegExp rx("^(File|Image|Text|Border|Shape|Graphic)[s0-9]{0,3}$");
+    QString nodeText = node.data(Qt::DisplayRole).toString();
+    // find out if there are children
+    if (rx.exactMatch(nodeText) == false) {
+        treeViewTemplate->setRowHidden(node.row(), node.parent(), true);
+    }
+    if (dModel->hasChildren()) {
+        // repeat for each child
+        for (int i = 0; i < dModel->rowCount(node); ++i){
+            filterJustTemplates(dModel->index(i,0,node));
+        }
+    }
+}
+
+void MainWindow::expandAllTreeTemplates()
+{
+    treeViewTemplate->expandAll();
+}
+
+void MainWindow::collapseAllTreeTemplates()
+{
+    treeViewTemplate->collapseAll();
+}
+
+//*************************************************************************************
+//  TREE OPERATIONS
+//*************************************************************************************
 
 void MainWindow::insertChild()
 {
@@ -287,21 +351,4 @@ void MainWindow::updateActions()
         else
             statusBar()->showMessage(tr("Position: (%1,%2) in top level").arg(row).arg(column));
     }
-}
-
-void MainWindow::on_comboBoxTemplates_currentIndexChanged(const QString &arg1)
-{
-    qDebug() << "on_comboBoxTemplates_currentIndexChanged";
-    updateTreeViewTemplates();
-}
-
-void MainWindow::on_treeViewTemplate_clicked(const QModelIndex &index)
-{
-    qDebug() << "on_treeViewTemplate_clicked";
-//    updateTreeViewProperties(index);              //Eliminated treeview for now
-}
-
-void MainWindow::addTemplate()
-{
-    dModel->addTemplateToModel("New template");
 }

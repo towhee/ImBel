@@ -83,6 +83,9 @@ public:
                     const QModelIndex &parent = QModelIndex());
     bool removeRows(int position, int rows,
                     const QModelIndex &parent = QModelIndex());
+
+    QModelIndex findRow(QModelIndex &startRow, QString name);
+
     void walkTree(const QModelIndex &node);
     void serializeModelData(const QModelIndex &node, int level);
     void WriteIndex( const QAbstractItemModel & model, const QModelIndex & index, QTextStream & stream, int level);
@@ -96,6 +99,7 @@ public:
     int dataStructureRows;      // ### required?
     QModelIndex addTemplateToModel(QString name);
     void addTemplateObjectToModel(QModelIndex &index, QString objectType);
+    void addTemplateObject(QModelIndex &index, QString name);
     void show_ds();
 
 private:

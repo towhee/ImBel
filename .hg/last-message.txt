@@ -1,1 +1,1 @@
-Basic data structure to create new timplates is now working for File and Image
+Add multiple border|text|shape|graphic to model now working

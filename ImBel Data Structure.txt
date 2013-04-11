@@ -1,4 +1,4 @@
-Level	Object	SubObject	Property	IndexCode	Delegate	Help tip
+Level	Object	Level1	Level2	IndexCode	Delegate	Help tip
 3	File	Width	N/A	FileWidth	Text	Fit in this width including any borders 
 3	File	Height	N/A	FileHeight	Text	Fit in this height including any borders
 3	File	Sharpen amount	N/A	FileSharpen amount	Slider	Apply post resizing sharpening only to the image

@@ -59,8 +59,7 @@ public:
 
 private:
     void initImage();
-    void MainWindow::updateTreeViewTemplates();
-//    void MainWindow::updateTreeViewProperties(const QModelIndex &index);
+    void MainWindow::updateTreeViewTemplates(const QModelIndex &treeRootIndex);
     void filterJustTemplates(const QModelIndex &node);
     DataModel* dModel;
 
@@ -74,11 +73,19 @@ private slots:
     void insertRow();
     bool removeColumn(const QModelIndex &parent = QModelIndex());
     void removeRow();
+
     void on_comboBoxTemplates_currentIndexChanged(const QString &arg1);
     void on_treeViewTemplate_clicked(const QModelIndex &index);
     void toggleViewTemplateWidget();
     void addTemplate();
+    void addObject(QString name);
+    void addBorder();
+    void addText();
+    void addShape();
+    void addGraphic();
     void showModelInTree();
+    void expandAllTreeTemplates();
+    void collapseAllTreeTemplates();
 };
 
 #endif // MAINWINDOW_H

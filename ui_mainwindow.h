@@ -48,6 +48,10 @@ public:
     QAction *actionAdd_a_new_text;
     QAction *actionAdd_a_new_shape;
     QAction *actionAdd_a_new_graphic;
+    QAction *actionAdd_a_new_template;
+    QAction *action_Expand_all_in_tree;
+    QAction *action_Collapse_all_in_tree;
+    QAction *actionTest2;
     QWidget *centralwidget;
     QHBoxLayout *horizontalLayout_2;
     QGraphicsView *graphicsView;
@@ -108,6 +112,14 @@ public:
         actionAdd_a_new_shape->setObjectName(QStringLiteral("actionAdd_a_new_shape"));
         actionAdd_a_new_graphic = new QAction(MainWindow);
         actionAdd_a_new_graphic->setObjectName(QStringLiteral("actionAdd_a_new_graphic"));
+        actionAdd_a_new_template = new QAction(MainWindow);
+        actionAdd_a_new_template->setObjectName(QStringLiteral("actionAdd_a_new_template"));
+        action_Expand_all_in_tree = new QAction(MainWindow);
+        action_Expand_all_in_tree->setObjectName(QStringLiteral("action_Expand_all_in_tree"));
+        action_Collapse_all_in_tree = new QAction(MainWindow);
+        action_Collapse_all_in_tree->setObjectName(QStringLiteral("action_Collapse_all_in_tree"));
+        actionTest2 = new QAction(MainWindow);
+        actionTest2->setObjectName(QStringLiteral("actionTest2"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         horizontalLayout_2 = new QHBoxLayout(centralwidget);
@@ -171,6 +183,7 @@ public:
         sizePolicy1.setHeightForWidth(comboBoxTemplates->sizePolicy().hasHeightForWidth());
         comboBoxTemplates->setSizePolicy(sizePolicy1);
         comboBoxTemplates->setMinimumSize(QSize(0, 0));
+        comboBoxTemplates->setEditable(true);
 
         horizontalLayout->addWidget(comboBoxTemplates);
 
@@ -241,6 +254,7 @@ public:
         menubar->addAction(menu_Test->menuAction());
         menubar->addAction(menu_View->menuAction());
         fileMenu->addAction(exitAction);
+        actionsMenu->addAction(actionAdd_a_new_template);
         actionsMenu->addSeparator();
         actionsMenu->addAction(actionAdd_a_new_border);
         actionsMenu->addAction(actionAdd_a_new_text);
@@ -255,14 +269,25 @@ public:
         actionsMenu->addSeparator();
         actionsMenu->addAction(insertChildAction);
         menu_Test->addAction(action_Run_test);
-        menu_Test->addAction(actionAnother);
+        menu_Test->addAction(actionTest2);
         menu_View->addAction(actionShow_Templates);
         menu_View->addAction(actionShow_model_in_tree);
+        menu_View->addSeparator();
+        menu_View->addAction(action_Expand_all_in_tree);
+        menu_View->addAction(action_Collapse_all_in_tree);
 
         retranslateUi(MainWindow);
         QObject::connect(action_Run_test, SIGNAL(triggered()), MainWindow, SLOT(RunTest()));
         QObject::connect(actionShow_Templates, SIGNAL(triggered()), MainWindow, SLOT(toggleViewTemplateWidget()));
         QObject::connect(actionShow_model_in_tree, SIGNAL(triggered()), MainWindow, SLOT(showModelInTree()));
+        QObject::connect(actionAdd_a_new_template, SIGNAL(triggered()), MainWindow, SLOT(addText()));
+        QObject::connect(comboBoxTemplates, SIGNAL(currentIndexChanged(int)), MainWindow, SLOT(updateTreeViewTemplates()));
+        QObject::connect(action_Expand_all_in_tree, SIGNAL(triggered()), MainWindow, SLOT(expandAllTreeTemplates()));
+        QObject::connect(action_Collapse_all_in_tree, SIGNAL(triggered()), MainWindow, SLOT(collapseAllTreeTemplates()));
+        QObject::connect(actionAdd_a_new_border, SIGNAL(triggered()), MainWindow, SLOT(addBorder()));
+        QObject::connect(actionAdd_a_new_text, SIGNAL(triggered()), MainWindow, SLOT(addText()));
+        QObject::connect(actionAdd_a_new_shape, SIGNAL(triggered()), MainWindow, SLOT(addShape()));
+        QObject::connect(actionAdd_a_new_graphic, SIGNAL(triggered()), MainWindow, SLOT(addGraphic()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -292,6 +317,12 @@ public:
         actionAdd_a_new_text->setText(QApplication::translate("MainWindow", "Add a new text", 0));
         actionAdd_a_new_shape->setText(QApplication::translate("MainWindow", "Add a new shape", 0));
         actionAdd_a_new_graphic->setText(QApplication::translate("MainWindow", "Add a new graphic", 0));
+        actionAdd_a_new_template->setText(QApplication::translate("MainWindow", "Add a new &template", 0));
+        action_Expand_all_in_tree->setText(QApplication::translate("MainWindow", "&Expand all in tree", 0));
+        action_Expand_all_in_tree->setShortcut(QApplication::translate("MainWindow", "Ctrl++", 0));
+        action_Collapse_all_in_tree->setText(QApplication::translate("MainWindow", "&Collapse all in tree", 0));
+        action_Collapse_all_in_tree->setShortcut(QApplication::translate("MainWindow", "Ctrl+-", 0));
+        actionTest2->setText(QApplication::translate("MainWindow", "Test2", 0));
         fileMenu->setTitle(QApplication::translate("MainWindow", "&File", 0));
         actionsMenu->setTitle(QApplication::translate("MainWindow", "&Actions", 0));
         menu_Test->setTitle(QApplication::translate("MainWindow", "&Test", 0));
