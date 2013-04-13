@@ -1,42 +1,3 @@
-/****************************************************************************
-**
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
-** Contact: http://www.qt-project.org/legal
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** You may use this file under the terms of the BSD license as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of Digia Plc and its Subsidiary(-ies) nor the names
-**     of its contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
 
 #include <QtWidgets>
 
@@ -48,16 +9,21 @@ DataModel::DataModel(const QStringList &headers, const QString &data, QObject *p
     : QAbstractItemModel(parent)
 {
     // Build the array ds[][] that holds the data structure for each template
-    // object: file, image, border, text, shape and graphic.
+    // object: file, image, border, text, shape and graphic.  This is used to build
+    // new objects (file, image, border, text, shape and graphic)
     initDataStructure();
 
-    // Read date from data file into the model
+    // Read data from data file into the model
     // Start with the headers
     QVector<QVariant> rootData;
     foreach (QString header, headers)
         rootData << header;
 
+    // create the root
     rootItem = new DataItemItem(rootData);
+    rootItem->insertChildren(0, 1, 5);
+    rootItem->child(0)->setData(0, "root");
+
     // populate the model from the data file
     setupModelData(data.split(QString("\n")), rootItem);
 }
@@ -243,11 +209,7 @@ bool DataModel::setHeaderData(int section, Qt::Orientation orientation,
 
 void DataModel::walkTree(const QModelIndex &node)
 {
-    // Do model stuff with current index
-//    qDebug() << this->data(index(node.row(),0,node.parent()), Qt::DisplayRole).toString() << " | "
-//             << this->data(index(node.row(),1,node.parent()), Qt::DisplayRole).toString() << " | "
-//             << this->data(index(node.row(),2,node.parent()), Qt::DisplayRole).toString() << " | "
-//             << this->hasChildren(); // << " | " << node.child(0,0).model()->hasChildren();
+    // Do model stuff with current index here
 
     // find out if there are children
     if (this->hasChildren()) {
@@ -304,8 +266,10 @@ void DataModel::setupModelData(const QStringList &lines, DataItemItem *parent)
             // Append a new item to the current parent's list of children.
             DataItemItem *parent = parents.last();
             parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
-            for (int column = 0; column < columnData.size(); ++column)
+            for (int column = 0; column < columnData.size(); ++column){
+                if (columnData[column] == "N/A") columnData[column] = "";
                 parent->child(parent->childCount() - 1)->setData(column, columnData[column]);
+            }
         }
 
         ++lineNumber;
@@ -318,29 +282,40 @@ QModelIndex DataModel::findRow(QModelIndex &startRow, QString name)
     return sList[0];
 }
 
-void DataModel::serializeModelData(const QModelIndex &index, int level)
+QString DataModel::star(int count)
 {
+    QString s = "";
+    if (count > 0)
+        for (int i = 0; i < count; ++i)
+            s.append("*");
+    return s;
+}
 
-    // Do model stuff with current index
-    qDebug() << "Siblings: " << rowCount(index.parent()) << "\t"
-             << "Level: " << level << "\t"
-             << "Row: " << index.row() << "\t"
-             << "Col: " << index.column() << "\t"
-             << this->data(index, Qt::DisplayRole).toString();
+void DataModel::serializeModelData(const QModelIndex &idx, int level, QString &fileText)
+{
+    QString objectText = this->data(idx, Qt::DisplayRole).toString();
+    QModelIndex idx1 = this->index(idx.row(), 1, idx.parent());
+    QString valueText = this->data(idx1, Qt::DisplayRole).toString();
+    QModelIndex idx2 = this->index(idx.row(), 2, idx.parent());
+    QString indexText = this->data(idx2, Qt::DisplayRole).toString();
 
-    // find out if there are children
+    if (level > 0) {    // do not save root, it is created in constructor
+        QString rowText = star(level);
+        rowText.append(objectText);
+        // Check if attribute row with values and and index
+        if (indexText.length() > 0) {
+            if (valueText.length() == 0) valueText = "N/A";
+            rowText.append(QString("\t%1").arg(valueText));
+            rowText.append(QString("\t%1").arg(indexText));
+        }
+        rowText.append("\n");
+        fileText.append(rowText);
+    }
+
     if (this->hasChildren()) {
-        QString text = this->data(index, Qt::DisplayRole).toString();
-        int nRows = rowCount(index);
-        int nCols = columnCount(index);
-        // repeat for each child
+        int nRows = rowCount(idx);
         for (int nRow = 0; nRow < nRows; ++nRow){
-            for (int nCol = 0; nCol < nCols; ++nCol) {
-                // check to see if the node value is null
-                QString text = this->data(index, Qt::DisplayRole).toString();
-                if (text.length() > 0)
-                    serializeModelData(this->index(nRow, nCol, index), level+1);
-            }
+            serializeModelData(this->index(nRow, 0, idx), level+1, fileText);
         }
     }
 }
@@ -357,7 +332,7 @@ void DataModel::initDataStructure()
 
     ds takes the form ds[row][column]
 
-    Columns are enumerated by DSF as LEVEL, OBJECT, LEVEL1, LEVEL2, INDEX, DELEGATE, HELPTIP
+    Columns are enumerated by DSF as LEVEL0, LEVEL1, LEVEL2, INDEX, DELEGATE, HELPTIP
 
     Therefore ds[17][HELPTIP] = the help tip in the 17th row.
               ds[17][INDEX] = the index code, which might be "ImageTint"
@@ -390,10 +365,10 @@ See comments in initDataStructure() and addTemplateObjectToModel()
     setData(newTemplate, name, Qt::EditRole);
     addTemplateObjectToModel(newTemplate, "File");
     addTemplateObjectToModel(newTemplate, "Image");
-    addTemplateObjectToModel(newTemplate, "Border");
-    addTemplateObjectToModel(newTemplate, "Text");
-    addTemplateObjectToModel(newTemplate, "Shape");
-    addTemplateObjectToModel(newTemplate, "Graphic");
+    addTemplateObjectToModel(newTemplate, "Borders");
+    addTemplateObjectToModel(newTemplate, "Texts");
+    addTemplateObjectToModel(newTemplate, "Shapes");
+    addTemplateObjectToModel(newTemplate, "Graphics");
     return newTemplate;
 }
 
@@ -402,47 +377,35 @@ void DataModel::addTemplateObject(QModelIndex &rootTemplate, QString name)
     // Find the template object parent
     QString searchFor;
     if (name == "Border")  searchFor = "Borders";
-    if (name == "Text")  searchFor = "Text";
+    if (name == "Text")  searchFor = "Texts";
     if (name == "Shape")  searchFor = "Shapes";
     if (name == "Graphic")  searchFor = "Graphics";
     QModelIndex objectParent = findRow(rootTemplate, searchFor);
     addTemplateObjectToModel(objectParent, name);
-
-//    // Find out how many objects (borders, text etc) already exist
-//    DataItemItem *rootItem = getItem(objectParent);
-//    int nChild = rootItem->childCount();
-
-//    name.append(QString("%1").arg(nChild + 1));
-//    // Add a new object to the model
-//    QModelIndex root = index(nChild, 0, objectParent);
-
-//    qDebug() << "rootTemplate    : " << rootTemplate.model()->data(rootTemplate, Qt::DisplayRole)
-//             << "\nrootObject      : " << objectParent.model()->data(objectParent, Qt::DisplayRole)
-//             << "\nname            : " << name
-//             << "\n";
 }
 
 
 void DataModel::addTemplateObjectToModel(QModelIndex &parent, QString objectName)
 {
+    {
     /*
     All the information required to manage the templates is contained in the tab
     deliminated text file "ImBel Data Structure.txt" which resides in the QRC.  This file
     is loaded into a QList ds of QStringList. SEE initDataStructure().  Here is a sample
     of part of the text section of the file:
 
-    Level	Object	Level1          Level2  IndexCode           Delegate                Help tip
-    4       Text	Source          N/A     TextSource          Combobox + Button       N/A
-    4       Text	Text            N/A     TextText            Text                    N/A
-    4       Text	Font            N/A     TextFont            Combobox                N/A
-    4       Text	Size            N/A     TextSize            Slider                  N/A
-    4       Text	Color           N/A     TextColor           Color picker            N/A
-    4       Text	Opacity         N/A     TextOpacity         Slider                  N/A
-    4       Text	Blending mode	N/A     TextBlending mode	Combobox                N/A
-    5       Text	Halo            Size	TextHaloSize        Slider                  N/A
-    5       Text	Halo            Color	TextHaloColor       Color picker            N/A
-    5       Text	Halo            Opacity	TextHaloOpacity     Slider                  N/A
-    5       Text	Halo            Fade	TextHaloFade        Slider                  N/A
+    Level0	Level1          Level2  IndexCode           Delegate                Help tip
+    Text	Source          N/A     TextSource          Combobox + Button       N/A
+    Text	Text            N/A     TextText            Text                    N/A
+    Text	Font            N/A     TextFont            Combobox                N/A
+    Text	Size            N/A     TextSize            Slider                  N/A
+    Text	Color           N/A     TextColor           Color picker            N/A
+    Text	Opacity         N/A     TextOpacity         Slider                  N/A
+    Text	Blending mode	N/A     TextBlending mode	Combobox                N/A
+    Text	Halo            Size	TextHaloSize        Slider                  N/A
+    Text	Halo            Color	TextHaloColor       Color picker            N/A
+    Text	Halo            Opacity	TextHaloOpacity     Slider                  N/A
+    Text	Halo            Fade	TextHaloFade        Slider                  N/A
 
     addTemplateObjectToModel reads the data and adds it to the model.  It is then up to
     the user to enter property values.  Since blanks are not considered in a tab delimited file
@@ -467,42 +430,42 @@ void DataModel::addTemplateObjectToModel(QModelIndex &parent, QString objectName
     lookups back into QList ds[][].
 
      **/
+    }
     // Append the passed index to the template item
     // If it is a border, text, shape or graphic find out how many already exist
     // and append a number ie Border6
     QString objectTreeName = objectName;
 
     DataItemItem *rootItem = getItem(parent);
-    rootItem->insertChildren(rootItem->childCount(), 1, 1);
+    rootItem->insertChildren(rootItem->childCount(), 1, 3);
     QRegExp rx("^(Border|Text|Shape|Graphic)$");
     if (rx.exactMatch(objectName) == true)
         objectTreeName.append(QString("%1").arg(rootItem->childCount()));
-    for (int column = 0; column < 1; ++column)
-        rootItem->child(rootItem->childCount() - 1)->setData(column, objectTreeName);
+    rootItem->child(rootItem->childCount() - 1)->setData(0, objectTreeName);
     // Point to the new item1
     DataItemItem *parentItem1 = rootItem->child(rootItem->childCount()-1);
     // Point to the 2nd level as required
     DataItemItem *parentItem2;
     // Pointer to use
     DataItemItem *parentItem;
-
-    // Border, Text, Shape and Graphic can have multiple instances, called
-    // Border1, Border2 etc.  Therefore, only add header level for now.
-//    QRegExp rx("^(Border|Text|Shape|Graphic)$");
-//    if (rx.exactMatch(objectName) == true)
-//        return;
+    DataItemItem *currentItem;
 
     bool createRow;
+    bool isColumnData;
+    parentItem2 = parentItem1;
 
     for (int row = 0; row < ds.length() - 1; ++row)
     {
-        if (ds[row][OBJECT] == objectName) {
-            // ds[row][2] = level 0 tree branch, ds[row][3] = level 1 tree branch
-            for (int col = 2; col < 4; ++col){
+        if (ds[row][LEVEL0] == objectName) {
+            // ds[row][1] = level 0 tree branch, ds[row][2] = level 1 tree branch
+//            qDebug() << ds[row][INDEX];
+            for (int col = 1; col < 3; ++col){
                 parentItem = parentItem1;
                 createRow = true;
-
+                isColumnData = false;
                 // Set things up if Level1
+                if (col == LEVEL1 && ds[row][LEVEL2] == "N/A")
+                    isColumnData = true;
                 if (row > 0)
                     if (col == LEVEL1 && ds[row][col] == ds[row-1][col])
                         createRow = false;
@@ -511,12 +474,11 @@ void DataModel::addTemplateObjectToModel(QModelIndex &parent, QString objectName
                 if (col == LEVEL2) {
                     if (ds[row][LEVEL2] == "N/A")
                         createRow = false;
-                    else
+                    else {
+                        isColumnData = true;
                         if (row > 0)
-                            if (ds[row][LEVEL1] == ds[row-1][LEVEL1])
-                                parentItem = parentItem2;
-                            else
-                                parentItem = parentItem1;
+                            parentItem = parentItem2;
+                    }
                 }
                 if (col == LEVEL2 && row == 0)
                         parentItem = parentItem2;
@@ -525,22 +487,48 @@ void DataModel::addTemplateObjectToModel(QModelIndex &parent, QString objectName
                 if (createRow == true) {
 
                     {
+//                        QString s1 = ds[row][2];
+//                        pad(s1, 20);
+//                        QString s2 = ds[row][3];
+//                        pad(s2, 20);
+//                        QString s3 = parentItem2->data(0).toString();
+//                        pad(s3, 20);
+//                        QString s4 = parentItem->data(0).toString();
+//                        pad(s4, 20);
 //                    qDebug() << "Row: " << row << "\tCol: " << col
 //                             << "\tchildCount: " << parentItem->childCount()
-//                             << "\tLevel)0: " << ds[row][2]
-//                             << "\tLevel_1: " << ds[row][3]
-//                             << "parentItem: " << parentItem->data(0).toString();
+//                             << "\tisColumnData: " << isColumnData
+//                             << "\tLevel)0: " << s1
+//                             << "\tLevel_1: " << s2
+//                             << "\tparentItem2: " << s3
+//                             << "parentItem: " << s4
+//                             << "Delegate: " << ds[row][DELEGATE];
                     }
-                    parentItem->insertChildren(parentItem->childCount(), 1, 1);
-                    for (int column = 0; column < 1; ++column)
-                        parentItem->child(parentItem->childCount() - 1)->setData(column, ds[row][col]);
-
+                    parentItem->insertChildren(parentItem->childCount(), 1, 5);
+                    currentItem = parentItem->child(parentItem->childCount() - 1);
+                    currentItem->setData(0, ds[row][col]);
+                    if (isColumnData == true) {
+                        currentItem->setData(2, ds[row][INDEX]);
+                        currentItem->setData(3, ds[row][DELEGATE]);
+                        currentItem->setData(4, ds[row][HELPTIP]);
+                    }
                     if (col == LEVEL1)
                         parentItem2 = parentItem->child(parentItem->childCount()-1);
                 }
             }
         }
     }
+}
+
+void DataModel::pad(QString &text, int length)
+{
+    int currentLength = text.length();
+    int padAmount = length - currentLength;
+
+    if (padAmount > 0)
+        for (int i=0; i < padAmount; ++i)
+            text.append(" ");
+    return;
 }
 
 void DataModel::show_ds()

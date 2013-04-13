@@ -87,14 +87,14 @@ public:
     QModelIndex findRow(QModelIndex &startRow, QString name);
 
     void walkTree(const QModelIndex &node);
-    void serializeModelData(const QModelIndex &node, int level);
+    void serializeModelData(const QModelIndex &node, int level,QString &fileText);
     void WriteIndex( const QAbstractItemModel & model, const QModelIndex & index, QTextStream & stream, int level);
 
     QList<QStringList> ds;   // Holds data struction
 
     enum DSF                 // Data Structure Field
     {
-        LEVEL, OBJECT, LEVEL1, LEVEL2, INDEX, DELEGATE, HELPTIP
+        LEVEL0, LEVEL1, LEVEL2, INDEX, DELEGATE, HELPTIP
     };
     int dataStructureRows;      // ### required?
     QModelIndex addTemplateToModel(QString name);
@@ -105,6 +105,8 @@ public:
 private:
     void initDataStructure();
     void setupModelData(const QStringList &lines, DataItemItem *parent);
+    void pad(QString &text, int length);
+    QString star(int count);
     QString serializedModel;
     int level;
     DataItemItem *getItem(const QModelIndex &index) const;

@@ -1,1 +1,1 @@
-Add multiple border|text|shape|graphic to model now working
+Template data I/O now working, added options tab and forced tabs

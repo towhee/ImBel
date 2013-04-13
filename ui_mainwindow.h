@@ -16,14 +16,17 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDockWidget>
+#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QToolBar>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QVBoxLayout>
@@ -52,8 +55,12 @@ public:
     QAction *action_Expand_all_in_tree;
     QAction *action_Collapse_all_in_tree;
     QAction *actionTest2;
+    QAction *actionTest;
+    QAction *action_Save;
+    QAction *actionSave_As;
+    QAction *action_Open;
     QWidget *centralwidget;
-    QHBoxLayout *horizontalLayout_2;
+    QGridLayout *gridLayout;
     QGraphicsView *graphicsView;
     QMenuBar *menubar;
     QMenu *fileMenu;
@@ -64,14 +71,20 @@ public:
     QDockWidget *dockWidgetTemplates;
     QWidget *dockWidgetContents_3;
     QVBoxLayout *verticalLayout_2;
-    QFrame *frame;
-    QHBoxLayout *horizontalLayout;
-    QComboBox *comboBoxTemplates;
-    QToolButton *toolButton;
-    QToolButton *toolButton_2;
     QFrame *frameTreeTemplates;
     QVBoxLayout *verticalLayout;
+    QFrame *frameToolButtons;
+    QFormLayout *formLayout;
+    QToolButton *toolButton;
+    QFrame *frame_2;
+    QHBoxLayout *horizontalLayout;
+    QComboBox *comboBoxTemplates;
+    QToolButton *toolButtonExpandAll;
+    QToolButton *toolButtonCollapseAll;
     QTreeView *treeViewTemplate;
+    QToolBar *toolBar;
+    QDockWidget *dockWidgetOptions;
+    QWidget *dockWidgetContents;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -79,10 +92,11 @@ public:
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(1306, 964);
         QIcon icon;
-        icon.addFile(QStringLiteral(":/Hummer32.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/Graphics/Hummer32.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         MainWindow->setStyleSheet(QStringLiteral(""));
-        MainWindow->setDockNestingEnabled(false);
+        MainWindow->setDockNestingEnabled(true);
+        MainWindow->setDockOptions(QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::ForceTabbedDocks);
         exitAction = new QAction(MainWindow);
         exitAction->setObjectName(QStringLiteral("exitAction"));
         insertRowAction = new QAction(MainWindow);
@@ -120,11 +134,24 @@ public:
         action_Collapse_all_in_tree->setObjectName(QStringLiteral("action_Collapse_all_in_tree"));
         actionTest2 = new QAction(MainWindow);
         actionTest2->setObjectName(QStringLiteral("actionTest2"));
+        actionTest = new QAction(MainWindow);
+        actionTest->setObjectName(QStringLiteral("actionTest"));
+        actionTest->setCheckable(true);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/Graphics/Plus.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        actionTest->setIcon(icon1);
+        action_Save = new QAction(MainWindow);
+        action_Save->setObjectName(QStringLiteral("action_Save"));
+        actionSave_As = new QAction(MainWindow);
+        actionSave_As->setObjectName(QStringLiteral("actionSave_As"));
+        action_Open = new QAction(MainWindow);
+        action_Open->setObjectName(QStringLiteral("action_Open"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        horizontalLayout_2 = new QHBoxLayout(centralwidget);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        gridLayout = new QGridLayout(centralwidget);
+        gridLayout->setSpacing(2);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setContentsMargins(0, 0, 1, 0);
         graphicsView = new QGraphicsView(centralwidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setFrameShape(QFrame::Panel);
@@ -132,7 +159,7 @@ public:
         graphicsView->setLineWidth(1);
         graphicsView->setResizeAnchor(QGraphicsView::NoAnchor);
 
-        horizontalLayout_2->addWidget(graphicsView);
+        gridLayout->addWidget(graphicsView, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -152,83 +179,113 @@ public:
         MainWindow->setStatusBar(statusbar);
         dockWidgetTemplates = new QDockWidget(MainWindow);
         dockWidgetTemplates->setObjectName(QStringLiteral("dockWidgetTemplates"));
-        dockWidgetTemplates->setMinimumSize(QSize(113, 115));
+        dockWidgetTemplates->setMinimumSize(QSize(300, 192));
         dockWidgetTemplates->setBaseSize(QSize(0, 0));
         dockWidgetTemplates->setLocale(QLocale(QLocale::English, QLocale::Canada));
         dockWidgetContents_3 = new QWidget();
         dockWidgetContents_3->setObjectName(QStringLiteral("dockWidgetContents_3"));
         verticalLayout_2 = new QVBoxLayout(dockWidgetContents_3);
-        verticalLayout_2->setSpacing(0);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        frame = new QFrame(dockWidgetContents_3);
-        frame->setObjectName(QStringLiteral("frame"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
-        frame->setSizePolicy(sizePolicy);
-        frame->setMaximumSize(QSize(16777215, 22));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
-        horizontalLayout = new QHBoxLayout(frame);
-        horizontalLayout->setSpacing(1);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        comboBoxTemplates = new QComboBox(frame);
-        comboBoxTemplates->setObjectName(QStringLiteral("comboBoxTemplates"));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(comboBoxTemplates->sizePolicy().hasHeightForWidth());
-        comboBoxTemplates->setSizePolicy(sizePolicy1);
-        comboBoxTemplates->setMinimumSize(QSize(0, 0));
-        comboBoxTemplates->setEditable(true);
-
-        horizontalLayout->addWidget(comboBoxTemplates);
-
-        toolButton = new QToolButton(frame);
-        toolButton->setObjectName(QStringLiteral("toolButton"));
-        toolButton->setMinimumSize(QSize(0, 21));
-        QFont font;
-        font.setBold(true);
-        font.setWeight(75);
-        toolButton->setFont(font);
-        toolButton->setAutoRaise(true);
-        toolButton->setArrowType(Qt::NoArrow);
-
-        horizontalLayout->addWidget(toolButton);
-
-        toolButton_2 = new QToolButton(frame);
-        toolButton_2->setObjectName(QStringLiteral("toolButton_2"));
-        toolButton_2->setMinimumSize(QSize(0, 21));
-        QFont font1;
-        font1.setPointSize(8);
-        font1.setBold(true);
-        font1.setWeight(75);
-        toolButton_2->setFont(font1);
-        toolButton_2->setAutoRaise(true);
-
-        horizontalLayout->addWidget(toolButton_2);
-
-
-        verticalLayout_2->addWidget(frame);
-
         frameTreeTemplates = new QFrame(dockWidgetContents_3);
         frameTreeTemplates->setObjectName(QStringLiteral("frameTreeTemplates"));
         frameTreeTemplates->setFrameShape(QFrame::Panel);
         frameTreeTemplates->setFrameShadow(QFrame::Plain);
         frameTreeTemplates->setLineWidth(0);
         verticalLayout = new QVBoxLayout(frameTreeTemplates);
+        verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        treeViewTemplate = new QTreeView(frameTreeTemplates);
-        treeViewTemplate->setObjectName(QStringLiteral("treeViewTemplate"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        frameToolButtons = new QFrame(frameTreeTemplates);
+        frameToolButtons->setObjectName(QStringLiteral("frameToolButtons"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(frameToolButtons->sizePolicy().hasHeightForWidth());
+        frameToolButtons->setSizePolicy(sizePolicy);
+        frameToolButtons->setMaximumSize(QSize(16777215, 0));
+        frameToolButtons->setFrameShape(QFrame::StyledPanel);
+        frameToolButtons->setFrameShadow(QFrame::Raised);
+        formLayout = new QFormLayout(frameToolButtons);
+        formLayout->setObjectName(QStringLiteral("formLayout"));
+        formLayout->setContentsMargins(3, 0, 0, 0);
+        toolButton = new QToolButton(frameToolButtons);
+        toolButton->setObjectName(QStringLiteral("toolButton"));
+        toolButton->setMinimumSize(QSize(0, 20));
+
+        formLayout->setWidget(0, QFormLayout::LabelRole, toolButton);
+
+
+        verticalLayout->addWidget(frameToolButtons);
+
+        frame_2 = new QFrame(frameTreeTemplates);
+        frame_2->setObjectName(QStringLiteral("frame_2"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(frame_2->sizePolicy().hasHeightForWidth());
+        frame_2->setSizePolicy(sizePolicy1);
+        frame_2->setMaximumSize(QSize(16777215, 25));
+        frame_2->setSizeIncrement(QSize(0, 0));
+        frame_2->setFrameShape(QFrame::StyledPanel);
+        frame_2->setFrameShadow(QFrame::Raised);
+        horizontalLayout = new QHBoxLayout(frame_2);
+        horizontalLayout->setSpacing(0);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        comboBoxTemplates = new QComboBox(frame_2);
+        comboBoxTemplates->setObjectName(QStringLiteral("comboBoxTemplates"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(treeViewTemplate->sizePolicy().hasHeightForWidth());
-        treeViewTemplate->setSizePolicy(sizePolicy2);
+        sizePolicy2.setHeightForWidth(comboBoxTemplates->sizePolicy().hasHeightForWidth());
+        comboBoxTemplates->setSizePolicy(sizePolicy2);
+        comboBoxTemplates->setMinimumSize(QSize(0, 0));
+        comboBoxTemplates->setEditable(true);
+
+        horizontalLayout->addWidget(comboBoxTemplates);
+
+        toolButtonExpandAll = new QToolButton(frame_2);
+        toolButtonExpandAll->setObjectName(QStringLiteral("toolButtonExpandAll"));
+        toolButtonExpandAll->setMinimumSize(QSize(0, 21));
+        QFont font;
+        font.setBold(true);
+        font.setWeight(75);
+        toolButtonExpandAll->setFont(font);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/Graphics/Plus2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        toolButtonExpandAll->setIcon(icon2);
+        toolButtonExpandAll->setAutoRaise(true);
+        toolButtonExpandAll->setArrowType(Qt::NoArrow);
+
+        horizontalLayout->addWidget(toolButtonExpandAll);
+
+        toolButtonCollapseAll = new QToolButton(frame_2);
+        toolButtonCollapseAll->setObjectName(QStringLiteral("toolButtonCollapseAll"));
+        toolButtonCollapseAll->setMinimumSize(QSize(0, 21));
+        QFont font1;
+        font1.setPointSize(8);
+        font1.setBold(true);
+        font1.setWeight(75);
+        toolButtonCollapseAll->setFont(font1);
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/Graphics/Minus2.png"), QSize(), QIcon::Normal, QIcon::Off);
+        toolButtonCollapseAll->setIcon(icon3);
+        toolButtonCollapseAll->setAutoRaise(true);
+
+        horizontalLayout->addWidget(toolButtonCollapseAll);
+
+
+        verticalLayout->addWidget(frame_2);
+
+        treeViewTemplate = new QTreeView(frameTreeTemplates);
+        treeViewTemplate->setObjectName(QStringLiteral("treeViewTemplate"));
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(treeViewTemplate->sizePolicy().hasHeightForWidth());
+        treeViewTemplate->setSizePolicy(sizePolicy3);
+        treeViewTemplate->setMinimumSize(QSize(300, 0));
         treeViewTemplate->setSizeIncrement(QSize(0, 0));
         treeViewTemplate->setBaseSize(QSize(0, 0));
         treeViewTemplate->setMouseTracking(true);
@@ -237,8 +294,9 @@ public:
         treeViewTemplate->setFrameShadow(QFrame::Plain);
         treeViewTemplate->setLineWidth(0);
         treeViewTemplate->setAlternatingRowColors(true);
-        treeViewTemplate->setIndentation(20);
+        treeViewTemplate->setIndentation(15);
         treeViewTemplate->setRootIsDecorated(false);
+        treeViewTemplate->setWordWrap(true);
         treeViewTemplate->header()->setDefaultSectionSize(150);
 
         verticalLayout->addWidget(treeViewTemplate);
@@ -248,11 +306,24 @@ public:
 
         dockWidgetTemplates->setWidget(dockWidgetContents_3);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidgetTemplates);
+        toolBar = new QToolBar(MainWindow);
+        toolBar->setObjectName(QStringLiteral("toolBar"));
+        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
+        dockWidgetOptions = new QDockWidget(MainWindow);
+        dockWidgetOptions->setObjectName(QStringLiteral("dockWidgetOptions"));
+        dockWidgetContents = new QWidget();
+        dockWidgetContents->setObjectName(QStringLiteral("dockWidgetContents"));
+        dockWidgetOptions->setWidget(dockWidgetContents);
+        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidgetOptions);
 
         menubar->addAction(fileMenu->menuAction());
         menubar->addAction(actionsMenu->menuAction());
         menubar->addAction(menu_Test->menuAction());
         menubar->addAction(menu_View->menuAction());
+        fileMenu->addAction(action_Open);
+        fileMenu->addAction(action_Save);
+        fileMenu->addAction(actionSave_As);
+        fileMenu->addSeparator();
         fileMenu->addAction(exitAction);
         actionsMenu->addAction(actionAdd_a_new_template);
         actionsMenu->addSeparator();
@@ -275,12 +346,13 @@ public:
         menu_View->addSeparator();
         menu_View->addAction(action_Expand_all_in_tree);
         menu_View->addAction(action_Collapse_all_in_tree);
+        toolBar->addAction(actionTest);
 
         retranslateUi(MainWindow);
         QObject::connect(action_Run_test, SIGNAL(triggered()), MainWindow, SLOT(RunTest()));
         QObject::connect(actionShow_Templates, SIGNAL(triggered()), MainWindow, SLOT(toggleViewTemplateWidget()));
         QObject::connect(actionShow_model_in_tree, SIGNAL(triggered()), MainWindow, SLOT(showModelInTree()));
-        QObject::connect(actionAdd_a_new_template, SIGNAL(triggered()), MainWindow, SLOT(addText()));
+        QObject::connect(actionAdd_a_new_template, SIGNAL(triggered()), MainWindow, SLOT(addTemplate()));
         QObject::connect(comboBoxTemplates, SIGNAL(currentIndexChanged(int)), MainWindow, SLOT(updateTreeViewTemplates()));
         QObject::connect(action_Expand_all_in_tree, SIGNAL(triggered()), MainWindow, SLOT(expandAllTreeTemplates()));
         QObject::connect(action_Collapse_all_in_tree, SIGNAL(triggered()), MainWindow, SLOT(collapseAllTreeTemplates()));
@@ -288,6 +360,9 @@ public:
         QObject::connect(actionAdd_a_new_text, SIGNAL(triggered()), MainWindow, SLOT(addText()));
         QObject::connect(actionAdd_a_new_shape, SIGNAL(triggered()), MainWindow, SLOT(addShape()));
         QObject::connect(actionAdd_a_new_graphic, SIGNAL(triggered()), MainWindow, SLOT(addGraphic()));
+        QObject::connect(toolButtonExpandAll, SIGNAL(clicked()), MainWindow, SLOT(expandAllTreeTemplates()));
+        QObject::connect(toolButtonCollapseAll, SIGNAL(clicked()), MainWindow, SLOT(collapseAllTreeTemplates()));
+        QObject::connect(action_Save, SIGNAL(triggered()), MainWindow, SLOT(saveFile()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -323,13 +398,24 @@ public:
         action_Collapse_all_in_tree->setText(QApplication::translate("MainWindow", "&Collapse all in tree", 0));
         action_Collapse_all_in_tree->setShortcut(QApplication::translate("MainWindow", "Ctrl+-", 0));
         actionTest2->setText(QApplication::translate("MainWindow", "Test2", 0));
+        actionTest->setText(QApplication::translate("MainWindow", "Test", 0));
+#ifndef QT_NO_TOOLTIP
+        actionTest->setToolTip(QApplication::translate("MainWindow", "This is a test", 0));
+#endif // QT_NO_TOOLTIP
+        action_Save->setText(QApplication::translate("MainWindow", "&Save", 0));
+        action_Save->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0));
+        actionSave_As->setText(QApplication::translate("MainWindow", "Save &As", 0));
+        action_Open->setText(QApplication::translate("MainWindow", "&Open", 0));
         fileMenu->setTitle(QApplication::translate("MainWindow", "&File", 0));
         actionsMenu->setTitle(QApplication::translate("MainWindow", "&Actions", 0));
         menu_Test->setTitle(QApplication::translate("MainWindow", "&Test", 0));
         menu_View->setTitle(QApplication::translate("MainWindow", "&View", 0));
         dockWidgetTemplates->setWindowTitle(QApplication::translate("MainWindow", "Templates", 0));
-        toolButton->setText(QApplication::translate("MainWindow", "+", 0));
-        toolButton_2->setText(QApplication::translate("MainWindow", "-", 0));
+        toolButton->setText(QApplication::translate("MainWindow", "...", 0));
+        toolButtonExpandAll->setText(QApplication::translate("MainWindow", "+", 0));
+        toolButtonCollapseAll->setText(QApplication::translate("MainWindow", "-", 0));
+        toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
+        dockWidgetOptions->setWindowTitle(QApplication::translate("MainWindow", "Options", 0));
     } // retranslateUi
 
 };

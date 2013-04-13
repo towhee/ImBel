@@ -59,6 +59,7 @@ public:
 
 private:
     void initImage();
+    void initTreeTemplate();
     void MainWindow::updateTreeViewTemplates(const QModelIndex &treeRootIndex);
     void filterJustTemplates(const QModelIndex &node);
     DataModel* dModel;
@@ -86,6 +87,9 @@ private slots:
     void showModelInTree();
     void expandAllTreeTemplates();
     void collapseAllTreeTemplates();
+    bool saveFile();
+    bool readFile(QString fileName);
+
 };
 
 #endif // MAINWINDOW_H

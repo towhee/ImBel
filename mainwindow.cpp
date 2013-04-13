@@ -1,42 +1,4 @@
-/****************************************************************************
-**
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
-** Contact: http://www.qt-project.org/legal
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** You may use this file under the terms of the BSD license as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of Digia Plc and its Subsidiary(-ies) nor the names
-**     of its contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+
 
 #include "mainwindow.h"
 #include "datamodel.h"
@@ -48,27 +10,29 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setupUi(this);
-//    dockWidgetTemplates->sizeHint().setHeight(200);  //not working
+    this->tabifyDockWidget(dockWidgetTemplates, dockWidgetOptions);
+    dockWidgetTemplates->raise();
 
-    QPixmap pixmap(":/ImBel.png");
+    QPixmap pixmap(":/Graphics/ImBel.png");
     this->setWindowIcon(pixmap);
 
     initImage();
 
+    // Headers must match the enum DSF and the DataModel constructor!
     QStringList headers;
-    headers << tr("Item") << tr("Value");
+    headers << tr("Item") << tr("Value") << tr("Index")
+            << tr("Delegate") << tr("HelpTip");
 
     // read the data file ### add error trapping
-    QFile file(":/ImBel.txt");
+//    QFile file(":/ImBel.txt");
+    QFile file("ImBel.txt");
     file.open(QIODevice::ReadOnly);
-    //DataModel *dModel = new DataModel(headers, file.readAll());
     dModel = new DataModel(headers, file.readAll());
     file.close();
 
     QModelIndex rootIndex = dModel->index(0,0,QModelIndex());
 
-    treeViewTemplate->setModel(dModel);
-    treeViewTemplate->expandAll();
+    initTreeTemplate();
 
 
     // must set comboBoxTemplates after treeview because it updates
@@ -97,29 +61,31 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateActions();
 
-    //RunTest();
+//    addTemplate();
 }
 
 void MainWindow::RunTest()
 {
-    QRegExp rx("^(Border|Text|Shape|Graphic)$");
-    qDebug() << "Border :  " << (rx.exactMatch("Border"));
-    qDebug() << "Border1:  " << (rx.exactMatch("Border1"));
 
 
-    QModelIndex parent = dModel->addTemplateToModel("New Template");
-    comboBoxTemplates->setCurrentIndex(comboBoxTemplates->model()->rowCount());
-    updateTreeViewTemplates(parent);
-
-//    QModelIndex modelRootIndex = dModel->index(0,0,QModelIndex());
-//    dModel->serializeModelData(modelRootIndex, 0);
+//    qDebug() << fileText;
 }
 
-
-
-
-
-
+bool MainWindow::saveFile()
+{
+    QModelIndex modelRootIndex = dModel->index(0,0,QModelIndex());
+    QString fileText;
+    dModel->serializeModelData(modelRootIndex, 0, fileText);
+    qDebug() << fileText;
+//    return true;
+    QFile file("ImBel.txt");
+    if (!file.open(QIODevice::WriteOnly))
+          return false;
+    QTextStream outStream(&file);
+    outStream << fileText;
+    file.close();
+    return true;
+}
 
 void MainWindow::showModelInTree()
 {
@@ -138,7 +104,7 @@ void MainWindow::showModelInTree()
 void MainWindow::initImage()
 {
     QGraphicsScene *scene = new QGraphicsScene;
-    QPixmap pixmap(":/Hummer1000.jpg");
+    QPixmap pixmap(":/Graphics/Hummer1000.jpg");
     scene->addPixmap(pixmap);
     qDebug() << "graphicsView width: " << graphicsView->geometry();
     qDebug() << "pixmap width:       " << pixmap.width();
@@ -150,15 +116,27 @@ void MainWindow::initImage()
 //  TEMPLATE OPERATIONS
 //*************************************************************************************
 
+void MainWindow::initTreeTemplate()
+{
+
+    treeViewTemplate->setModel(dModel);
+    treeViewTemplate->setRowHidden(0, QModelIndex(),true);
+    treeViewTemplate->collapseAll();
+    treeViewTemplate->setColumnWidth(0, 200);
+    treeViewTemplate->setColumnWidth(1, 100);
+    treeViewTemplate->setColumnHidden(2, true);           // hide the index column
+    treeViewTemplate->setColumnHidden(3, true);           // hide the delegate column
+    treeViewTemplate->setColumnHidden(4, true);           // hide the helptip column
+    treeViewTemplate->setRootIsDecorated(true);
+}
+
 void MainWindow::updateTreeViewTemplates(const QModelIndex &treeRootIndex)
 {
     treeViewTemplate->setRootIndex(treeRootIndex);
-    treeViewTemplate->setRootIsDecorated(true);
-    treeViewTemplate->resizeColumnToContents(0);
-    treeViewTemplate->resizeColumnToContents(1);
-    int columnWidth = treeViewTemplate->columnWidth(0) + 20;
-    treeViewTemplate->setColumnWidth(0, columnWidth);
-    treeViewTemplate->expandAll();
+//    treeViewTemplate->resizeColumnToContents(0);
+//    treeViewTemplate->resizeColumnToContents(1);
+//    int columnWidth = treeViewTemplate->columnWidth(0) + 20;
+//    treeViewTemplate->expandAll();
 }
 
 void MainWindow::on_comboBoxTemplates_currentIndexChanged(const QString &arg1)
@@ -174,11 +152,31 @@ void MainWindow::on_treeViewTemplate_clicked(const QModelIndex &index)
 //    updateTreeViewProperties(index);              //Eliminated treeview for now
 }
 
+bool MainWindow::readFile(QString fileName)
+{
+    int newTemplateCount = 1;
+    return true;
+}
+
 void MainWindow::addTemplate()
 {
-    QModelIndex parent = dModel->addTemplateToModel("New Template");
-    comboBoxTemplates->setCurrentIndex(comboBoxTemplates->model()->rowCount());
-    updateTreeViewTemplates(parent);
+    // Check if any other new templates
+    int newTemplateCount = 1;
+    if (comboBoxTemplates->count() > 0) {
+        for (int i = 0; i < comboBoxTemplates->count(); ++i){
+            QString s = comboBoxTemplates->itemData(i, Qt::DisplayRole).toString();
+            if (s.startsWith("New Template"))
+                    ++newTemplateCount;
+        }
+
+    }
+    QString newTemplate = QString("New Template %1").arg(newTemplateCount);
+    QModelIndex parent = dModel->addTemplateToModel(newTemplate);
+    /* Appending a new template automatically adds a row to comboBoxTemplates
+       as it is a model view.  Changing the comboBox index triggers
+       :on_comboBoxTemplates_currentIndexChanged, which in turn, updates the
+       template treeview. */
+    comboBoxTemplates->setCurrentIndex(comboBoxTemplates->model()->rowCount()-1);
 }
 
 void MainWindow::addObject(QString name)
@@ -189,6 +187,7 @@ void MainWindow::addObject(QString name)
     QModelIndex rootTemplate = rootIndex.child(comboRow, 0);
     // Pass along to datamodel, where childCount can be used
     dModel->addTemplateObject(rootTemplate, name);
+    updateTreeViewTemplates(rootTemplate);
 }
 
 void MainWindow::addBorder()

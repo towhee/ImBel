@@ -15,19 +15,16 @@
   </property>
   <property name="windowIcon">
    <iconset resource="imbel.qrc">
-    <normaloff>:/Graphics/Hummer32.png</normaloff>:/Graphics/Hummer32.png</iconset>
+    <normaloff>:/Hummer32.png</normaloff>:/Hummer32.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
   <property name="dockNestingEnabled">
-   <bool>true</bool>
-  </property>
-  <property name="dockOptions">
-   <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::ForceTabbedDocks</set>
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -35,15 +32,12 @@
      <number>0</number>
     </property>
     <property name="rightMargin">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <property name="spacing">
-     <number>2</number>
-    </property>
-    <item row="0" column="0">
+    <item>
      <widget class="QGraphicsView" name="graphicsView">
       <property name="frameShape">
        <enum>QFrame::Panel</enum>
@@ -74,10 +68,6 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_Open"/>
-    <addaction name="action_Save"/>
-    <addaction name="actionSave_As"/>
-    <addaction name="separator"/>
     <addaction name="exitAction"/>
    </widget>
    <widget class="QMenu" name="actionsMenu">
@@ -125,8 +115,8 @@
   <widget class="QDockWidget" name="dockWidgetTemplates">
    <property name="minimumSize">
     <size>
-     <width>300</width>
-     <height>192</height>
+     <width>119</width>
+     <height>115</height>
     </size>
    </property>
    <property name="baseSize">
@@ -146,6 +136,9 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -159,19 +152,28 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QFrame" name="frameTreeTemplates">
+      <widget class="QFrame" name="frame">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>22</height>
+        </size>
+       </property>
        <property name="frameShape">
-        <enum>QFrame::Panel</enum>
+        <enum>QFrame::StyledPanel</enum>
        </property>
        <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
+        <enum>QFrame::Raised</enum>
        </property>
-       <property name="lineWidth">
-        <number>0</number>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="leftMargin">
          <number>0</number>
@@ -186,174 +188,107 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QFrame" name="frameToolButtons">
+         <widget class="QComboBox" name="comboBoxTemplates">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <layout class="QFormLayout" name="formLayout">
-           <property name="leftMargin">
-            <number>3</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item row="0" column="0">
-            <widget class="QToolButton" name="toolButton">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>...</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QFrame" name="frame_2">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="sizeIncrement">
+          <property name="minimumSize">
            <size>
             <width>0</width>
             <height>0</height>
            </size>
           </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
+          <property name="editable">
+           <bool>true</bool>
           </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QComboBox" name="comboBoxTemplates">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="toolButtonExpandAll">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>21</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>+</string>
-             </property>
-             <property name="icon">
-              <iconset resource="imbel.qrc">
-               <normaloff>:/Graphics/Plus2.png</normaloff>:/Graphics/Plus2.png</iconset>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-             <property name="arrowType">
-              <enum>Qt::NoArrow</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="toolButtonCollapseAll">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>21</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>8</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>-</string>
-             </property>
-             <property name="icon">
-              <iconset resource="imbel.qrc">
-               <normaloff>:/Graphics/Minus2.png</normaloff>:/Graphics/Minus2.png</iconset>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
         </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonExpandAll">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>21</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>+</string>
+          </property>
+          <property name="icon">
+           <iconset resource="imbel.qrc">
+            <normaloff>:/Graphics/Plus.ico</normaloff>:/Graphics/Plus.ico</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+          <property name="arrowType">
+           <enum>Qt::NoArrow</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonCollapseAll">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>21</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>-</string>
+          </property>
+          <property name="icon">
+           <iconset resource="imbel.qrc">
+            <normaloff>:/Graphics/Minus.png</normaloff>:/Graphics/Minus.png</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="frameTreeTemplates">
+       <property name="frameShape">
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QTreeView" name="treeViewTemplate">
           <property name="sizePolicy">
@@ -361,12 +296,6 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>0</height>
-           </size>
           </property>
           <property name="sizeIncrement">
            <size>
@@ -399,13 +328,10 @@
            <bool>true</bool>
           </property>
           <property name="indentation">
-           <number>15</number>
+           <number>10</number>
           </property>
           <property name="rootIsDecorated">
            <bool>false</bool>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
           </property>
           <attribute name="headerDefaultSectionSize">
            <number>150</number>
@@ -417,27 +343,6 @@
      </item>
     </layout>
    </widget>
-  </widget>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionTest"/>
-  </widget>
-  <widget class="QDockWidget" name="dockWidgetOptions">
-   <property name="windowTitle">
-    <string>Options</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents"/>
   </widget>
   <action name="exitAction">
    <property name="text">
@@ -560,39 +465,6 @@
   <action name="actionTest2">
    <property name="text">
     <string>Test2</string>
-   </property>
-  </action>
-  <action name="actionTest">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/Graphics/Plus.ico</normaloff>:/Graphics/Plus.ico</iconset>
-   </property>
-   <property name="text">
-    <string>Test</string>
-   </property>
-   <property name="toolTip">
-    <string>This is a test</string>
-   </property>
-  </action>
-  <action name="action_Save">
-   <property name="text">
-    <string>&amp;Save</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+S</string>
-   </property>
-  </action>
-  <action name="actionSave_As">
-   <property name="text">
-    <string>Save &amp;As</string>
-   </property>
-  </action>
-  <action name="action_Open">
-   <property name="text">
-    <string>&amp;Open</string>
    </property>
   </action>
  </widget>
@@ -808,22 +680,6 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>action_Save</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>saveFile()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>652</x>
-     <y>481</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>RunTest()</slot>
@@ -837,6 +693,5 @@
   <slot>addText()</slot>
   <slot>addShape()</slot>
   <slot>addGraphic()</slot>
-  <slot>saveFile()</slot>
  </slots>
 </ui>

@@ -1,7 +1,7 @@
 *New Template 1
 **File
 ***Width	1024px	FileWidth
-***Height	800px	FileHeight
+***Height	N/A	FileHeight
 ***Sharpen amount	N/A	FileSharpenAmount
 ***File type	N/A	FileFileType
 ***Compression	N/A	FileCompression
@@ -43,37 +43,6 @@
 ****Size	N/A	ImageBevelSize
 ****Softness	N/A	ImageBevelSoftness
 **Borders
-***Border1
-****Style	Test border	BorderStyle
-****Top	N/A	BorderTop
-****Left	N/A	BorderLeft
-****Right	N/A	BorderRight
-****Bottom	N/A	BorderBottom
-****Outside shadow
-*****Opacity	N/A	BorderOutsideShadowOpacity
-*****Blend mode	N/A	BorderOutsideShadowBlendMode
-*****Distance	N/A	BorderOutsideShadowDistance
-*****Color	N/A	BorderOutsideShadowColor
-****Inner shadow
-*****Opacity	N/A	BorderInnerShadowOpacity
-*****Blend mode	N/A	BorderInnerShadowBlendMode
-*****Distance	N/A	BorderInnerShadowDistance
-*****Color	N/A	BorderInnerShadowColor
-****Outer glow
-*****Blend mode	N/A	BorderOuterGlowBlendMode
-*****Opacity	N/A	BorderOuterGlowOpacity
-*****Fade	N/A	BorderOuterGlowFade
-*****Distance	N/A	BorderOuterGlowDistance
-****Inner glow
-*****Blend mode	N/A	BorderInnerGlowBlendMode
-*****Opacity	N/A	BorderInnerGlowOpacity
-*****Fade	N/A	BorderInnerGlowFade
-*****Distance	N/A	BorderInnerGlowDistance
-****Bevel
-*****Type	N/A	BorderBevelType
-*****Contour	N/A	BorderBevelContour
-*****Size	N/A	BorderBevelSize
-*****Softness	N/A	BorderBevelSoftness
 **Texts
 **Shapes
 **Graphics
