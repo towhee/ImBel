@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap pixmap(":/Graphics/ImBel.png");
     this->setWindowIcon(pixmap);
 
+    this->showStatus(tr("Welcome to ImBel"));
+
     initImage();
 
     // Headers must match the enum DSF and the DataModel constructor!
@@ -33,16 +35,10 @@ MainWindow::MainWindow(QWidget *parent)
     QModelIndex rootIndex = dModel->index(0,0,QModelIndex());
 
     initTreeTemplate();
-
-
     // must set comboBoxTemplates after treeview because it updates
     // based on comboBoxTemplates index changing
-    comboBoxTemplates->setModel(dModel);
-    comboBoxTemplates->setRootModelIndex(rootIndex);
-    comboBoxTemplates->setCurrentIndex(0);
+    initTreeCombobox();
 
-//    QModelIndex modelRootIndex = dModel->index(0,0,QModelIndex());
-//    QModelIndex treeRootIndex = rootIndex.child(row,0);
     updateTreeViewTemplates(rootIndex.child(0,0));
 
     connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
@@ -123,20 +119,23 @@ void MainWindow::initTreeTemplate()
     treeViewTemplate->setRowHidden(0, QModelIndex(),true);
     treeViewTemplate->collapseAll();
     treeViewTemplate->setColumnWidth(0, 200);
-    treeViewTemplate->setColumnWidth(1, 100);
+//    treeViewTemplate->setColumnWidth(1, 100);
+    treeViewTemplate->header()->setStretchLastSection(true);
+    treeViewTemplate->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     treeViewTemplate->setColumnHidden(2, true);           // hide the index column
     treeViewTemplate->setColumnHidden(3, true);           // hide the delegate column
     treeViewTemplate->setColumnHidden(4, true);           // hide the helptip column
     treeViewTemplate->setRootIsDecorated(true);
+    int c1 = treeViewTemplate->columnWidth(0);
+    int c2 = treeViewTemplate->columnWidth(1);
 }
 
-void MainWindow::updateTreeViewTemplates(const QModelIndex &treeRootIndex)
+void MainWindow::initTreeCombobox()
 {
-    treeViewTemplate->setRootIndex(treeRootIndex);
-//    treeViewTemplate->resizeColumnToContents(0);
-//    treeViewTemplate->resizeColumnToContents(1);
-//    int columnWidth = treeViewTemplate->columnWidth(0) + 20;
-//    treeViewTemplate->expandAll();
+    QModelIndex rootIndex = dModel->index(0,0,QModelIndex());
+    comboBoxTemplates->setModel(dModel);
+    comboBoxTemplates->setRootModelIndex(rootIndex);
+    comboBoxTemplates->setCurrentIndex(0);
 }
 
 void MainWindow::on_comboBoxTemplates_currentIndexChanged(const QString &arg1)
@@ -144,6 +143,20 @@ void MainWindow::on_comboBoxTemplates_currentIndexChanged(const QString &arg1)
     int comboRow = comboBoxTemplates->currentIndex();
     QModelIndex rootIndex = dModel->index(0,0,QModelIndex());
     updateTreeViewTemplates(rootIndex.child(comboRow,0));
+}
+
+void MainWindow::updateTreeViewTemplates(const QModelIndex &treeRootIndex)
+{
+    treeViewTemplate->setRootIndex(treeRootIndex);
+    QString s = QString("Widget width: %1\nColumn 0 width: %2\nColumn 1 width: %3")
+              .arg(treeViewTemplate->width())
+              .arg(treeViewTemplate->columnWidth(0))
+              .arg(treeViewTemplate->columnWidth(1));
+    qDebug() << s;
+//    treeViewTemplate->resizeColumnToContents(0);
+//    treeViewTemplate->resizeColumnToContents(1);
+//    int columnWidth = treeViewTemplate->columnWidth(0) + 20;
+//    treeViewTemplate->expandAll();
 }
 
 void MainWindow::on_treeViewTemplate_clicked(const QModelIndex &index)
@@ -350,4 +363,13 @@ void MainWindow::updateActions()
         else
             statusBar()->showMessage(tr("Position: (%1,%2) in top level").arg(row).arg(column));
     }
+}
+
+//*************************************************************************************
+//  WINDOW OPERATIONS
+//*************************************************************************************
+
+void MainWindow::showStatus(QString &msg)
+{
+    statusBar()->showMessage(msg);
 }

@@ -242,6 +242,7 @@ public:
         comboBoxTemplates->setSizePolicy(sizePolicy2);
         comboBoxTemplates->setMinimumSize(QSize(0, 0));
         comboBoxTemplates->setEditable(true);
+        comboBoxTemplates->setInsertPolicy(QComboBox::InsertAtCurrent);
 
         horizontalLayout->addWidget(comboBoxTemplates);
 

@@ -46,6 +46,7 @@
 #include <QMainWindow>
 #include <QModelIndex>
 #include <QStringListModel>
+#include <QDataWidgetMapper>
 
 class DataModel;
 
@@ -56,10 +57,12 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 public:
     MainWindow(QWidget *parent = 0);
     QStringListModel *comboList;
+    void showStatus(QString &msg);
 
 private:
     void initImage();
     void initTreeTemplate();
+    void initTreeCombobox();
     void MainWindow::updateTreeViewTemplates(const QModelIndex &treeRootIndex);
     void filterJustTemplates(const QModelIndex &node);
     DataModel* dModel;

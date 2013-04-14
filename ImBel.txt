@@ -1,4 +1,4 @@
-*New Template 1
+*Zenfolio 1024px
 **File
 ***Width	1024px	FileWidth
 ***Height	800px	FileHeight
@@ -75,5 +75,80 @@
 *****Size	N/A	BorderBevelSize
 *****Softness	N/A	BorderBevelSoftness
 **Texts
+**Shapes
+**Graphics
+*Zenfolio home page
+**File
+***Width	N/A	FileWidth
+***Height	N/A	FileHeight
+***Sharpen amount	N/A	FileSharpenAmount
+***File type	N/A	FileFileType
+***Compression	N/A	FileCompression
+***Colorspace	N/A	FileColorspace
+***File location logic	N/A	FileFileLocationLogic
+***Folder name	N/A	FileFolderName
+***File suffix	N/A	FileFileSuffix
+***Overwrite existing files	N/A	FileOverwriteExistingFiles
+**Image
+***Style	N/A	ImageStyle
+***Light direction	N/A	ImageLightDirection
+***Light angle	N/A	ImageLightAngle
+***Texture	N/A	ImageTexture
+***Tint color	N/A	ImageTintColor
+***Tint opacity	N/A	ImageTintOpacity
+***Outside shadow
+****Opacity	N/A	ImageOutsideShadowOpacity
+****Blend mode	N/A	ImageOutsideShadowBlendMode
+****Distance	N/A	ImageOutsideShadowDistance
+****Color	N/A	ImageOutsideShadowColor
+***Inner shadow
+****Opacity	N/A	ImageInnerShadowOpacity
+****Blend mode	N/A	ImageInnerShadowBlendMode
+****Distance	N/A	ImageInnerShadowDistance
+****Color	N/A	ImageInnerShadowColor
+***Outer glow
+****Blend mode	N/A	ImageOuterGlowBlendMode
+****Opacity	N/A	ImageOuterGlowOpacity
+****Fade	N/A	ImageOuterGlowFade
+****Distance	N/A	ImageOuterGlowDistance
+***Inner glow
+****Blend mode	N/A	ImageInnerGlowBlendMode
+****Opacity	N/A	ImageInnerGlowOpacity
+****Fade	N/A	ImageInnerGlowFade
+****Distance	N/A	ImageInnerGlowDistance
+***Bevel
+****Type	N/A	ImageBevelType
+****Contour	N/A	ImageBevelContour
+****Size	N/A	ImageBevelSize
+****Softness	N/A	ImageBevelSoftness
+**Borders
+**Texts
+***Text1
+****Source	N/A	TextSource
+****Text	This is the 2nd template	TextText
+****Font	N/A	TextFont
+****Size	N/A	TextSize
+****Color	N/A	TextColor
+****Opacity	N/A	TextOpacity
+****Blending mode	N/A	TextBlendingMode
+****Halo
+*****Size	N/A	TextHaloSize
+*****Color	N/A	TextHaloColor
+*****Opacity	N/A	TextHaloOpacity
+*****Fade	N/A	TextHaloFade
+****Shadow
+*****Opacity	N/A	TextShadowOpacity
+*****Blend mode	N/A	TextShadowBlendMode
+*****Distance	N/A	TextShadowDistance
+*****Color	N/A	TextShadowColor
+****Location
+*****Reference object	N/A	TextLocationReferenceObject
+*****Reference portion	N/A	TextLocationReferencePortion
+*****Orientation	N/A	TextLocationOrientation
+*****X	N/A	TextLocationX
+*****Y	N/A	TextLocationY
+*****Anchor from	N/A	TextLocationAnchorFrom
+*****Anchor to	N/A	TextLocationAnchorTo
+*****Orientation	N/A	TextLocationOrientation
 **Shapes
 **Graphics

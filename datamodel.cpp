@@ -51,8 +51,13 @@ QVariant DataModel::data(const QModelIndex &index, int role) const
     if (role != Qt::DisplayRole && role != Qt::EditRole)
         return QVariant();
 
+//    QModelIndex indexHelpTip = this->index(index.row(), 5, index.parent());
+//    QString msg = "HelpTip";
+//    QString msg = this->data(indexHelpTip, Qt::DisplayRole).toString();
+//    MainWindow.statusBar()->showMessage("Helptip");
+//    MainWindow.showStatus(msg);
+//    qDebug() << msg;
     DataItemItem *item = getItem(index);
-
     return item->data(index.column());
 }
 
@@ -207,15 +212,12 @@ bool DataModel::setHeaderData(int section, Qt::Orientation orientation,
     return result;
 }
 
-void DataModel::walkTree(const QModelIndex &node)
+// Algorithm to walk a tree structure
+void DataModel::walkTree(const QModelIndex &row)
 {
-    // Do model stuff with current index here
-
-    // find out if there are children
     if (this->hasChildren()) {
-        // repeat for each child
-        for (int i = 0; i < rowCount(node); ++i){
-            walkTree(this->index(i,0,node));
+        for (int i = 0; i < rowCount(row); ++i){
+            walkTree(this->index(i,0,row));
         }
     }
 }

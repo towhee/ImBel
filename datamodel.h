@@ -46,7 +46,10 @@
 #include <QVariant>
 #include <QTextStream>
 
+#include "mainwindow.h"
+
 class DataItemItem;
+
 
 //! [0]
 class DataModel : public QAbstractItemModel
