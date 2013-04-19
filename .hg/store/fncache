@@ -1,25 +1,28 @@
 data/treemodel.cpp.i
 data/mainwindow.cpp.i
+data/editabletreemodel.pro.user.i
 data/ImBel.txt.i
 data/mainwindow.h.i
 data/ImBel Data Structure.txt.i
 data/ImBel Data Structure.xlsx.i
-data/ToDo.txt.i
+data/Hummer32.png.i
 data/ImBel.pro.i
+data/delegate.cpp.i
 data/mainwindow.ui.i
 data/ImBel.qrc.i
 data/dataitem.h.i
 data/ui_mainwindow.h.i
-data/Hummer32.png.i
+data/ToDo.txt.i
 data/ImBel.png.i
-data/Notes.txt.i
-data/Hummer1000.jpg.i
 data/Hummer2.png.i
+data/Hummer1000.jpg.i
+data/Notes.txt.i
 data/datamodel.h.i
 data/Hummer1000.jpg.d
 data/dataitem.cpp.i
 data/treeitem.h.i
 data/main.cpp.i
 data/datamodel.cpp.i
+data/delegate.h.i
 data/treemodel.h.i
 data/treeitem.cpp.i

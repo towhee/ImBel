@@ -17,14 +17,17 @@ FORMS       = mainwindow.ui
 HEADERS     = mainwindow.h \
               ui_mainwindow.h \
               dataitem.h \
-              datamodel.h
+              datamodel.h \
+              delegate.h
 
 RESOURCES   = imbel.qrc
 
 SOURCES     = mainwindow.cpp \
               dataitem.cpp \
               datamodel.cpp \
-              main.cpp
+              main.cpp \
+              delegate.cpp
 
 OTHER_FILES += \
-    ToDo.txt
+    ToDo.txt \
+    Notes.txt

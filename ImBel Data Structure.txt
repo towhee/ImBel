@@ -1,79 +1,79 @@
 Level0	Level1	Level2	IndexCode	Delegate	Help tip
 File	Width	N/A	FileWidth	Text	Fit in this width including any borders 
 File	Height	N/A	FileHeight	Text	Fit in this height including any borders
-File	Sharpen amount	N/A	FileSharpenAmount	Slider	Apply post resizing sharpening only to the image
+File	Sharpen amount	N/A	FileSharpenAmount	Spinbox	Apply post resizing sharpening only to the image
 File	File type	N/A	FileFileType	Combobox	Select the file type to save
-File	Compression	N/A	FileCompression	Slider	Select the file compression - this only applies to JPG files
+File	Compression	N/A	FileCompression	Spinbox	Select the file compression - this only applies to JPG files
 File	Colorspace	N/A	FileColorspace	Combobox	Select the file color space - if unclear choose sRGB
 File	File location logic	N/A	FileFileLocationLogic	Combobox	Select absolute if you know the folder or relative if you want to put in a subfolder of the originating file
-File	Folder name	N/A	FileFolderName	Text and button	The absolute path or the relative folder name
+File	Folder name	N/A	FileFolderName	Text	The absolute path or the relative folder name
 File	File suffix	N/A	FileFileSuffix	Text	"Add suffix text to the file name ie 0001.jpg -> 0001_800px.jpg where ""_800px is the suffix added"
 File	Overwrite existing files	N/A	FileOverwriteExistingFiles	Checkbox	Be careful - do not select this unless you are SURE
 Image	Style	N/A	ImageStyle	Combobox	Select a style to be applied to the image - a style is a combination of all the image settings
 Image	Light direction	N/A	ImageLightDirection	Dial	The light direction affects shadows and bevels
 Image	Light angle	N/A	ImageLightAngle	Dial	The light angle affects shadows and bevels
-Image	Texture	N/A	ImageTexture	Combobox + Button	Select a texture to apply or go build your own 
+Image	Texture	N/A	ImageTexture	Combobox	Select a texture to apply or go build your own 
 Image	Tint color	N/A	ImageTintColor	Color picker	Select a color to tint the image
-Image	Tint opacity	N/A	ImageTintOpacity	Slider	Set the opacity of the tint
-Image	Outside shadow	Opacity	ImageOutsideShadowOpacity	Slider	N/A
+Image	Tint opacity	N/A	ImageTintOpacity	Spinbox	Set the opacity of the tint
+Image	Outside shadow	Opacity	ImageOutsideShadowOpacity	Spinbox	N/A
 Image	Outside shadow	Blend mode	ImageOutsideShadowBlendMode	Combobox	N/A
 Image	Outside shadow	Distance	ImageOutsideShadowDistance	Text	N/A
 Image	Outside shadow	Color	ImageOutsideShadowColor	Color picker	N/A
-Image	Inner shadow	Opacity	ImageInnerShadowOpacity	Slider	N/A
+Image	Inner shadow	Opacity	ImageInnerShadowOpacity	Spinbox	N/A
 Image	Inner shadow	Blend mode	ImageInnerShadowBlendMode	Combobox	N/A
-Image	Inner shadow	Distance	ImageInnerShadowDistance	Slider	N/A
+Image	Inner shadow	Distance	ImageInnerShadowDistance	Spinbox	N/A
 Image	Inner shadow	Color	ImageInnerShadowColor	Color picker	N/A
 Image	Outer glow	Blend mode	ImageOuterGlowBlendMode	Combobox	N/A
-Image	Outer glow	Opacity	ImageOuterGlowOpacity	Slider	N/A
-Image	Outer glow	Fade	ImageOuterGlowFade	Slider	N/A
-Image	Outer glow	Distance	ImageOuterGlowDistance	Slider	N/A
+Image	Outer glow	Opacity	ImageOuterGlowOpacity	Spinbox	N/A
+Image	Outer glow	Fade	ImageOuterGlowFade	Spinbox	N/A
+Image	Outer glow	Distance	ImageOuterGlowDistance	Spinbox	N/A
 Image	Inner glow	Blend mode	ImageInnerGlowBlendMode	Combobox	N/A
-Image	Inner glow	Opacity	ImageInnerGlowOpacity	Slider	N/A
-Image	Inner glow	Fade	ImageInnerGlowFade	Slider	N/A
-Image	Inner glow	Distance	ImageInnerGlowDistance	Slider	N/A
+Image	Inner glow	Opacity	ImageInnerGlowOpacity	Spinbox	N/A
+Image	Inner glow	Fade	ImageInnerGlowFade	Spinbox	N/A
+Image	Inner glow	Distance	ImageInnerGlowDistance	Spinbox	N/A
 Image	Bevel	Type	ImageBevelType	Combobox	N/A
-Image	Bevel	Contour	ImageBevelContour	Combobox + Button	N/A
-Image	Bevel	Size	ImageBevelSize	Slider	N/A
-Image	Bevel	Softness	ImageBevelSoftness	Slider	N/A
+Image	Bevel	Contour	ImageBevelContour	Combobox	N/A
+Image	Bevel	Size	ImageBevelSize	Spinbox	N/A
+Image	Bevel	Softness	ImageBevelSoftness	Spinbox	N/A
 Border	Style	N/A	BorderStyle	Combobox	Select a style to be applied to the border - a style is a combination of all the image settings
-Border	Top	N/A	BorderTop	Slider	N/A
-Border	Left	N/A	BorderLeft	Slider	N/A
-Border	Right	N/A	BorderRight	Slider	N/A
-Border	Bottom	N/A	BorderBottom	Slider	N/A
-Border	Outside shadow	Opacity	BorderOutsideShadowOpacity	Slider	N/A
+Border	Top	N/A	BorderTop	Spinbox	N/A
+Border	Left	N/A	BorderLeft	Spinbox	N/A
+Border	Right	N/A	BorderRight	Spinbox	N/A
+Border	Bottom	N/A	BorderBottom	Spinbox	N/A
+Border	Outside shadow	Opacity	BorderOutsideShadowOpacity	Spinbox	N/A
 Border	Outside shadow	Blend mode	BorderOutsideShadowBlendMode	Combobox	N/A
 Border	Outside shadow	Distance	BorderOutsideShadowDistance	Text	N/A
 Border	Outside shadow	Color	BorderOutsideShadowColor	Color picker	N/A
-Border	Inner shadow	Opacity	BorderInnerShadowOpacity	Slider	N/A
+Border	Inner shadow	Opacity	BorderInnerShadowOpacity	Spinbox	N/A
 Border	Inner shadow	Blend mode	BorderInnerShadowBlendMode	Combobox	N/A
-Border	Inner shadow	Distance	BorderInnerShadowDistance	Slider	N/A
+Border	Inner shadow	Distance	BorderInnerShadowDistance	Spinbox	N/A
 Border	Inner shadow	Color	BorderInnerShadowColor	Color picker	N/A
 Border	Outer glow	Blend mode	BorderOuterGlowBlendMode	Combobox	N/A
-Border	Outer glow	Opacity	BorderOuterGlowOpacity	Slider	N/A
-Border	Outer glow	Fade	BorderOuterGlowFade	Slider	N/A
-Border	Outer glow	Distance	BorderOuterGlowDistance	Slider	N/A
+Border	Outer glow	Opacity	BorderOuterGlowOpacity	Spinbox	N/A
+Border	Outer glow	Fade	BorderOuterGlowFade	Spinbox	N/A
+Border	Outer glow	Distance	BorderOuterGlowDistance	Spinbox	N/A
 Border	Inner glow	Blend mode	BorderInnerGlowBlendMode	Combobox	N/A
-Border	Inner glow	Opacity	BorderInnerGlowOpacity	Slider	N/A
-Border	Inner glow	Fade	BorderInnerGlowFade	Slider	N/A
-Border	Inner glow	Distance	BorderInnerGlowDistance	Slider	N/A
+Border	Inner glow	Opacity	BorderInnerGlowOpacity	Spinbox	N/A
+Border	Inner glow	Fade	BorderInnerGlowFade	Spinbox	N/A
+Border	Inner glow	Distance	BorderInnerGlowDistance	Spinbox	N/A
 Border	Bevel	Type	BorderBevelType	Combobox	N/A
-Border	Bevel	Contour	BorderBevelContour	Combobox + Button	N/A
-Border	Bevel	Size	BorderBevelSize	Slider	N/A
-Border	Bevel	Softness	BorderBevelSoftness	Slider	N/A
-Text	Source	N/A	TextSource	Combobox + Button	N/A
+Border	Bevel	Contour	BorderBevelContour	Combobox	N/A
+Border	Bevel	Size	BorderBevelSize	Spinbox	N/A
+Border	Bevel	Softness	BorderBevelSoftness	Spinbox	N/A
+Text	Source	N/A	TextSource	Combobox	N/A
 Text	Text	N/A	TextText	Text	N/A
 Text	Font	N/A	TextFont	Combobox	N/A
-Text	Size	N/A	TextSize	Slider	N/A
+Text	Size	N/A	TextSize	Spinbox	N/A
 Text	Color	N/A	TextColor	Color picker	N/A
-Text	Opacity	N/A	TextOpacity	Slider	N/A
+Text	Opacity	N/A	TextOpacity	Spinbox	N/A
 Text	Blending mode	N/A	TextBlendingMode	Combobox	N/A
-Text	Halo	Size	TextHaloSize	Slider	N/A
+Text	Halo	Size	TextHaloSize	Spinbox	N/A
 Text	Halo	Color	TextHaloColor	Color picker	N/A
-Text	Halo	Opacity	TextHaloOpacity	Slider	N/A
-Text	Halo	Fade	TextHaloFade	Slider	N/A
-Text	Shadow	Opacity	TextShadowOpacity	Slider	N/A
+Text	Halo	Opacity	TextHaloOpacity	Spinbox	N/A
+Text	Halo	Fade	TextHaloFade	Spinbox	N/A
+Text	Shadow	Opacity	TextShadowOpacity	Spinbox	N/A
 Text	Shadow	Blend mode	TextShadowBlendMode	Combobox	N/A
-Text	Shadow	Distance	TextShadowDistance	Slider	N/A
+Text	Shadow	Distance	TextShadowDistance	Spinbox	N/A
 Text	Shadow	Color	TextShadowColor	Color picker	N/A
 Text	Location	Reference object	TextLocationReferenceObject	Combobox	N/A
 Text	Location	Reference portion	TextLocationReferencePortion	Combobox	N/A
@@ -91,23 +91,23 @@ Shape	Locaton	Pt 2 Y	ShapeLocatonPt 2 Y	Text	N/A
 Shape	Location	Anchor from	ShapeLocationAnchorFrom	Text	N/A
 Shape	Location	Anchor to	ShapeLocationAnchorTo	Text	N/A
 Shape	Line	Type	ShapeLineType	Combobox	N/A
-Shape	Line	Width	ShapeLineWidth	Slider	N/A
+Shape	Line	Width	ShapeLineWidth	Spinbox	N/A
 Shape	Line	Color	ShapeLineColor	Color picker	N/A
-Shape	Line	Opacity	ShapeLineOpacity	Slider	N/A
-Shape	Line	Texture	ShapeLineTexture	Combobox + Button	N/A
-Shape	Halo	Size	ShapeHaloSize	Slider	N/A
+Shape	Line	Opacity	ShapeLineOpacity	Spinbox	N/A
+Shape	Line	Texture	ShapeLineTexture	Combobox	N/A
+Shape	Halo	Size	ShapeHaloSize	Spinbox	N/A
 Shape	Halo	Color	ShapeHaloColor	Color picker	N/A
-Shape	Halo	Opacity	ShapeHaloOpacity	Slider	N/A
-Shape	Halo	Fade	ShapeHaloFade	Slider	N/A
-Shape	Shadow	Opacity	ShapeShadowOpacity	Slider	N/A
+Shape	Halo	Opacity	ShapeHaloOpacity	Spinbox	N/A
+Shape	Halo	Fade	ShapeHaloFade	Spinbox	N/A
+Shape	Shadow	Opacity	ShapeShadowOpacity	Spinbox	N/A
 Shape	Shadow	Blend mode	ShapeShadowBlendMode	Combobox	N/A
-Shape	Shadow	Distance	ShapeShadowDistance	Slider	N/A
+Shape	Shadow	Distance	ShapeShadowDistance	Spinbox	N/A
 Shape	Shadow	Color	ShapeShadowColor	Color picker	N/A
 Shape	Fill	Color	ShapeFillColor	Color picker	N/A
-Shape	Fill	Opacity	ShapeFillOpacity	Slider	N/A
-Shape	Fill	Texture	ShapeFillTexture	Combobox + Button	N/A
-Graphic	File	N/A	GraphicFile	Text + button	N/A
-Graphic	Opacity	N/A	GraphicOpacity	Slider	N/A
+Shape	Fill	Opacity	ShapeFillOpacity	Spinbox	N/A
+Shape	Fill	Texture	ShapeFillTexture	Combobox	N/A
+Graphic	File	N/A	GraphicFile	Text	N/A
+Graphic	Opacity	N/A	GraphicOpacity	Spinbox	N/A
 Graphic	Blend mode	N/A	GraphicBlendMode	Combobox	N/A
 Graphic	Location	X	GraphicLocationX	Text	N/A
 Graphic	Location	Y	GraphicLocationY	Text	N/A

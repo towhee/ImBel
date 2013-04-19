@@ -38,18 +38,15 @@
 **
 ****************************************************************************/
 
-#ifndef DATAMODEL_H
-#define DATAMODEL_H
+#ifndef TREEMODEL_H
+#define TREEMODEL_H
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
 #include <QTextStream>
 
-#include "mainwindow.h"
-
-class DataItemItem;
-
+class TreeItem;
 
 //! [0]
 class DataModel : public QAbstractItemModel
@@ -60,6 +57,7 @@ public:
     DataModel(const QStringList &headers, const QString &data,
               QObject *parent = 0);
     ~DataModel();
+//! [0] //! [1]
 
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation,
@@ -71,9 +69,10 @@ public:
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
+//! [1]
 
+//! [2]
     Qt::ItemFlags flags(const QModelIndex &index) const;
-    void setFlags(Qt::ItemFlags flags);
     bool setData(const QModelIndex &index, const QVariant &value,
                  int role = Qt::EditRole);
     bool setHeaderData(int section, Qt::Orientation orientation,
@@ -87,48 +86,17 @@ public:
                     const QModelIndex &parent = QModelIndex());
     bool removeRows(int position, int rows,
                     const QModelIndex &parent = QModelIndex());
-
-    QString getDelegate(const QModelIndex &index) const;
-    QString getHelpTip(const QModelIndex &index) const;
-    QModelIndex findModelRow(QModelIndex &startRow, QString name);
-
     void walkTree(const QModelIndex &node);
-    void serializeModelData(const QModelIndex &node, int level,QString &fileText);
-    void appendAttributeColumnData(QModelIndex & index);
+    void serializeModelData(const QModelIndex &node, int level);
     void WriteIndex( const QAbstractItemModel & model, const QModelIndex & index, QTextStream & stream, int level);
-
-    QList<QStringList> ds;   // Holds data struction
-
-    enum DSF                 // Data Structure Field
-    {
-        D_LEVEL0, D_LEVEL1, D_LEVEL2, D_INDEX, D_DELEGATE, D_HELPTIP
-    };
-    enum modelColumns
-    {
-        M_ITEM, M_VALUE, M_INDEX, M_DELEGATE, M_HELPTIP
-    };
-
-    int dataStructureRows;      // ### required?
-    QModelIndex addTemplateToModel(QString name);
-    void addTemplateObjectToModel(QModelIndex &index, QString objectType);
-    void addTemplateObject(QModelIndex &index, QString name);
-    int findRowInDS(QString indexText);
-    void show_ds();
-
 private:
-    void initDataStructure();
-    void readFileData(const QStringList &lines, DataItemItem *parent);
-    void pad(QString &text, int length);
-    QString star(int count);
+    void setupModelData(const QStringList &lines, TreeItem *parent);
     QString serializedModel;
     int level;
-    DataItemItem *getItem(const QModelIndex &index) const;
+    TreeItem *getItem(const QModelIndex &index) const;
 
-    DataItemItem *rootItem;
-
-signals:
-    void mouseOverItem(const QModelIndex &index) const;
+    TreeItem *rootItem;
 };
 //! [2]
 
-#endif // DATAMODEL_H
+#endif // TREEMODEL_H

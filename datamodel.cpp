@@ -25,7 +25,8 @@ DataModel::DataModel(const QStringList &headers, const QString &data, QObject *p
     rootItem->child(0)->setData(0, "root");
 
     // populate the model from the data file
-    setupModelData(data.split(QString("\n")), rootItem);
+    readFileData(data.split(QString("\n")), rootItem);
+    appendAttributeColumnData(index(0, 0, QModelIndex()));
 }
 //! [0]
 
@@ -45,21 +46,37 @@ int DataModel::columnCount(const QModelIndex & /* parent */) const
 
 QVariant DataModel::data(const QModelIndex &index, int role) const
 {
+{/*
+    The data structure:
+
+    data(0) = item description
+    data(1) = item value
+    data(2) = item string index (concat of all generation item descriptions
+    data(3) = item delegate to use
+    data(4) = item help tip
+ */}
     if (!index.isValid())
         return QVariant();
 
-    if (role != Qt::DisplayRole && role != Qt::EditRole)
-        return QVariant();
+    if (role == Qt::StatusTipRole || role == Qt::ToolTipRole){
+        DataItemItem *item = getItem(index);
+        emit mouseOverItem(index);
+//        mouseOverItem(index);
+        return item->data(M_HELPTIP).toString();
+    }
 
-//    QModelIndex indexHelpTip = this->index(index.row(), 5, index.parent());
-//    QString msg = "HelpTip";
-//    QString msg = this->data(indexHelpTip, Qt::DisplayRole).toString();
-//    MainWindow.statusBar()->showMessage("Helptip");
-//    MainWindow.showStatus(msg);
-//    qDebug() << msg;
-    DataItemItem *item = getItem(index);
-    return item->data(index.column());
+    if (role == Qt::DisplayRole || role == Qt::EditRole){
+        DataItemItem *item = getItem(index);
+        return item->data(index.column());
+     }
+
+    return QVariant();
 }
+
+//void DataModel::mouseOverItem(const QModelIndex &index) const
+//{
+//    emit(index);
+//}
 
 //! [3]
 Qt::ItemFlags DataModel::flags(const QModelIndex &index) const
@@ -71,7 +88,11 @@ Qt::ItemFlags DataModel::flags(const QModelIndex &index) const
 }
 //! [3]
 
-//! [4]
+//void DataModel::setFlags(Qt::ItemFlags flags)
+//{
+//    setData((int) flags, Qt::UserRole - 1);
+//}
+
 DataItemItem *DataModel::getItem(const QModelIndex &index) const
 {
     if (index.isValid()) {
@@ -81,7 +102,7 @@ DataItemItem *DataModel::getItem(const QModelIndex &index) const
     }
     return rootItem;
 }
-//! [4]
+
 
 QVariant DataModel::headerData(int section, Qt::Orientation orientation,
                                int role) const
@@ -223,7 +244,7 @@ void DataModel::walkTree(const QModelIndex &row)
 }
 
 
-void DataModel::setupModelData(const QStringList &lines, DataItemItem *parent)
+void DataModel::readFileData(const QStringList &lines, DataItemItem *parent)
 {
     QList<DataItemItem*> parents;
     QList<int> indentations;
@@ -278,7 +299,19 @@ void DataModel::setupModelData(const QStringList &lines, DataItemItem *parent)
     }
 }
 
-QModelIndex DataModel::findRow(QModelIndex &startRow, QString name)
+QString DataModel::getDelegate(const QModelIndex &index) const
+{
+    DataItemItem *item = getItem(index);
+    return item->data(3).toString();
+}
+
+QString DataModel::getHelpTip(const QModelIndex &index) const
+{
+    DataItemItem *item = getItem(index);
+    return item->data(4).toString();
+}
+
+QModelIndex DataModel::findModelRow(QModelIndex &startRow, QString name)
 {
     QModelIndexList sList = match(startRow, Qt::DisplayRole, name, 1,Qt::MatchRecursive);
     return sList[0];
@@ -296,9 +329,9 @@ QString DataModel::star(int count)
 void DataModel::serializeModelData(const QModelIndex &idx, int level, QString &fileText)
 {
     QString objectText = this->data(idx, Qt::DisplayRole).toString();
-    QModelIndex idx1 = this->index(idx.row(), 1, idx.parent());
+    QModelIndex idx1 = this->index(idx.row(), M_VALUE, idx.parent());
     QString valueText = this->data(idx1, Qt::DisplayRole).toString();
-    QModelIndex idx2 = this->index(idx.row(), 2, idx.parent());
+    QModelIndex idx2 = this->index(idx.row(), M_INDEX, idx.parent());
     QString indexText = this->data(idx2, Qt::DisplayRole).toString();
 
     if (level > 0) {    // do not save root, it is created in constructor
@@ -382,7 +415,7 @@ void DataModel::addTemplateObject(QModelIndex &rootTemplate, QString name)
     if (name == "Text")  searchFor = "Texts";
     if (name == "Shape")  searchFor = "Shapes";
     if (name == "Graphic")  searchFor = "Graphics";
-    QModelIndex objectParent = findRow(rootTemplate, searchFor);
+    QModelIndex objectParent = findModelRow(rootTemplate, searchFor);
     addTemplateObjectToModel(objectParent, name);
 }
 
@@ -458,7 +491,7 @@ void DataModel::addTemplateObjectToModel(QModelIndex &parent, QString objectName
 
     for (int row = 0; row < ds.length() - 1; ++row)
     {
-        if (ds[row][LEVEL0] == objectName) {
+        if (ds[row][D_LEVEL0] == objectName) {
             // ds[row][1] = level 0 tree branch, ds[row][2] = level 1 tree branch
 //            qDebug() << ds[row][INDEX];
             for (int col = 1; col < 3; ++col){
@@ -466,15 +499,15 @@ void DataModel::addTemplateObjectToModel(QModelIndex &parent, QString objectName
                 createRow = true;
                 isColumnData = false;
                 // Set things up if Level1
-                if (col == LEVEL1 && ds[row][LEVEL2] == "N/A")
+                if (col == D_LEVEL1 && ds[row][D_LEVEL2] == "N/A")
                     isColumnData = true;
                 if (row > 0)
-                    if (col == LEVEL1 && ds[row][col] == ds[row-1][col])
+                    if (col == D_LEVEL1 && ds[row][col] == ds[row-1][col])
                         createRow = false;
 
                 // Set things up if Level2
-                if (col == LEVEL2) {
-                    if (ds[row][LEVEL2] == "N/A")
+                if (col == D_LEVEL2) {
+                    if (ds[row][D_LEVEL2] == "N/A")
                         createRow = false;
                     else {
                         isColumnData = true;
@@ -482,7 +515,7 @@ void DataModel::addTemplateObjectToModel(QModelIndex &parent, QString objectName
                             parentItem = parentItem2;
                     }
                 }
-                if (col == LEVEL2 && row == 0)
+                if (col == D_LEVEL2 && row == 0)
                         parentItem = parentItem2;
 
                 // Create a new row, either a child or a sibling
@@ -510,16 +543,46 @@ void DataModel::addTemplateObjectToModel(QModelIndex &parent, QString objectName
                     currentItem = parentItem->child(parentItem->childCount() - 1);
                     currentItem->setData(0, ds[row][col]);
                     if (isColumnData == true) {
-                        currentItem->setData(2, ds[row][INDEX]);
-                        currentItem->setData(3, ds[row][DELEGATE]);
-                        currentItem->setData(4, ds[row][HELPTIP]);
+                        currentItem->setData(M_INDEX, ds[row][D_INDEX]);
+                        currentItem->setData(M_DELEGATE, ds[row][D_DELEGATE]);
+                        currentItem->setData(M_HELPTIP, ds[row][D_HELPTIP]);
                     }
-                    if (col == LEVEL1)
+                    if (col == D_LEVEL1)
                         parentItem2 = parentItem->child(parentItem->childCount()-1);
                 }
             }
         }
     }
+}
+
+void DataModel::appendAttributeColumnData(QModelIndex &index)
+/*
+    Add the delegate and helptip information from the data structure to the model
+*/
+{
+    QModelIndex indexIndex = this->index(index.row(), M_INDEX, index.parent());
+    QString rowIndex = (this->data(indexIndex, Qt::DisplayRole)).toString();
+    // only attributes with values have an INDEX description.
+    if (rowIndex.length() > 0) {
+        int rowDS = findRowInDS(rowIndex);
+        QModelIndex delegateIndex = index.model()->index(index.row(), 3, index.parent());
+        QModelIndex helptipIndex = index.model()->index(index.row(), 4, index.parent());
+        this->setData(delegateIndex, ds[rowDS][D_DELEGATE]);
+        this->setData(helptipIndex, ds[rowDS][D_HELPTIP]);
+    }
+    if (hasChildren(index)){
+        int nSiblings = rowCount(index);
+        for (int sibling = 0; sibling < nSiblings; ++sibling) {
+            appendAttributeColumnData(this->index(sibling, 0, index));
+        }
+    }
+}
+
+int DataModel::findRowInDS(QString indexText)
+{
+    for (int row = 0; row < ds.length() - 1; ++row)
+        if (ds[row][D_INDEX] == indexText)
+            return row;
 }
 
 void DataModel::pad(QString &text, int length)

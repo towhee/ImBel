@@ -83,7 +83,7 @@ public:
     QToolButton *toolButtonCollapseAll;
     QTreeView *treeViewTemplate;
     QToolBar *toolBar;
-    QDockWidget *dockWidgetOptions;
+    QDockWidget *dockWidgetPreferences;
     QWidget *dockWidgetContents;
 
     void setupUi(QMainWindow *MainWindow)
@@ -148,6 +148,7 @@ public:
         action_Open->setObjectName(QStringLiteral("action_Open"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        centralwidget->setStyleSheet(QStringLiteral("border-bottom-color: rgb(171, 171, 171);"));
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setSpacing(2);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
@@ -176,6 +177,7 @@ public:
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QStringLiteral("statusbar"));
+        statusbar->setStyleSheet(QStringLiteral("background-color: rgb(156, 156, 156);"));
         MainWindow->setStatusBar(statusbar);
         dockWidgetTemplates = new QDockWidget(MainWindow);
         dockWidgetTemplates->setObjectName(QStringLiteral("dockWidgetTemplates"));
@@ -294,8 +296,8 @@ public:
         treeViewTemplate->setStyleSheet(QStringLiteral(""));
         treeViewTemplate->setFrameShadow(QFrame::Plain);
         treeViewTemplate->setLineWidth(0);
-        treeViewTemplate->setAlternatingRowColors(true);
-        treeViewTemplate->setIndentation(15);
+        treeViewTemplate->setAlternatingRowColors(false);
+        treeViewTemplate->setIndentation(10);
         treeViewTemplate->setRootIsDecorated(false);
         treeViewTemplate->setWordWrap(true);
         treeViewTemplate->header()->setDefaultSectionSize(150);
@@ -310,12 +312,12 @@ public:
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName(QStringLiteral("toolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
-        dockWidgetOptions = new QDockWidget(MainWindow);
-        dockWidgetOptions->setObjectName(QStringLiteral("dockWidgetOptions"));
+        dockWidgetPreferences = new QDockWidget(MainWindow);
+        dockWidgetPreferences->setObjectName(QStringLiteral("dockWidgetPreferences"));
         dockWidgetContents = new QWidget();
         dockWidgetContents->setObjectName(QStringLiteral("dockWidgetContents"));
-        dockWidgetOptions->setWidget(dockWidgetContents);
-        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidgetOptions);
+        dockWidgetPreferences->setWidget(dockWidgetContents);
+        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidgetPreferences);
 
         menubar->addAction(fileMenu->menuAction());
         menubar->addAction(actionsMenu->menuAction());
@@ -413,10 +415,16 @@ public:
         menu_View->setTitle(QApplication::translate("MainWindow", "&View", 0));
         dockWidgetTemplates->setWindowTitle(QApplication::translate("MainWindow", "Templates", 0));
         toolButton->setText(QApplication::translate("MainWindow", "...", 0));
+#ifndef QT_NO_TOOLTIP
+        toolButtonExpandAll->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Expand all branches of the tree.</p></body></html>", 0));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_STATUSTIP
+        toolButtonExpandAll->setStatusTip(QApplication::translate("MainWindow", "Expand all braches of the template tree.", 0));
+#endif // QT_NO_STATUSTIP
         toolButtonExpandAll->setText(QApplication::translate("MainWindow", "+", 0));
         toolButtonCollapseAll->setText(QApplication::translate("MainWindow", "-", 0));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
-        dockWidgetOptions->setWindowTitle(QApplication::translate("MainWindow", "Options", 0));
+        dockWidgetPreferences->setWindowTitle(QApplication::translate("MainWindow", "Preferences", 0));
     } // retranslateUi
 
 };

@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setupUi(this);
-    this->tabifyDockWidget(dockWidgetTemplates, dockWidgetOptions);
+    this->tabifyDockWidget(dockWidgetTemplates, dockWidgetPreferences);
     dockWidgetTemplates->raise();
 
     QPixmap pixmap(":/Graphics/ImBel.png");
@@ -34,12 +34,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     QModelIndex rootIndex = dModel->index(0,0,QModelIndex());
 
+    noEditDelegate = new NoEditDelegate(this);
+    baseDelegate = new BaseDelegate(this);
+    widgetDelegate = new WidgetDelegate(this);
+//    connect(baseDelegate, SIGNAL(updateStatus(const QString&)), this, SLOT(showStatus(const QString&)));
+    connect(dModel, SIGNAL(mouseOverItem(const QModelIndex&)),
+            widgetDelegate, SLOT(on_BaseDelegate_MouseOver(const QModelIndex&)));
+
     initTreeTemplate();
     // must set comboBoxTemplates after treeview because it updates
     // based on comboBoxTemplates index changing
     initTreeCombobox();
 
     updateTreeViewTemplates(rootIndex.child(0,0));
+
 
     connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
@@ -118,16 +126,21 @@ void MainWindow::initTreeTemplate()
     treeViewTemplate->setModel(dModel);
     treeViewTemplate->setRowHidden(0, QModelIndex(),true);
     treeViewTemplate->collapseAll();
-    treeViewTemplate->setColumnWidth(0, 200);
-//    treeViewTemplate->setColumnWidth(1, 100);
+    treeViewTemplate->setColumnWidth(0, 150);
+    treeViewTemplate->setColumnWidth(1, 100);
+    treeViewTemplate->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);  // does not help
     treeViewTemplate->header()->setStretchLastSection(true);
-    treeViewTemplate->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     treeViewTemplate->setColumnHidden(2, true);           // hide the index column
     treeViewTemplate->setColumnHidden(3, true);           // hide the delegate column
     treeViewTemplate->setColumnHidden(4, true);           // hide the helptip column
     treeViewTemplate->setRootIsDecorated(true);
+    treeViewTemplate->setEditTriggers(QAbstractItemView::AllEditTriggers);
     int c1 = treeViewTemplate->columnWidth(0);
     int c2 = treeViewTemplate->columnWidth(1);
+
+    treeViewTemplate->setItemDelegate(baseDelegate);
+    treeViewTemplate->setItemDelegateForColumn(0, noEditDelegate);
+    treeViewTemplate->setItemDelegateForColumn(1, widgetDelegate);
 }
 
 void MainWindow::initTreeCombobox()
@@ -148,21 +161,13 @@ void MainWindow::on_comboBoxTemplates_currentIndexChanged(const QString &arg1)
 void MainWindow::updateTreeViewTemplates(const QModelIndex &treeRootIndex)
 {
     treeViewTemplate->setRootIndex(treeRootIndex);
-    QString s = QString("Widget width: %1\nColumn 0 width: %2\nColumn 1 width: %3")
-              .arg(treeViewTemplate->width())
-              .arg(treeViewTemplate->columnWidth(0))
-              .arg(treeViewTemplate->columnWidth(1));
-    qDebug() << s;
-//    treeViewTemplate->resizeColumnToContents(0);
-//    treeViewTemplate->resizeColumnToContents(1);
-//    int columnWidth = treeViewTemplate->columnWidth(0) + 20;
-//    treeViewTemplate->expandAll();
 }
 
 void MainWindow::on_treeViewTemplate_clicked(const QModelIndex &index)
 {
-    qDebug() << "on_treeViewTemplate_clicked";
-//    updateTreeViewProperties(index);              //Eliminated treeview for now
+//  QVariant helpTip = dModel->data(index, Qt::StatusTipRole);
+    QString helpTip = dModel->getHelpTip(index);
+    qDebug() << "on_treeViewTemplate_clicked - helpTip = " << helpTip;
 }
 
 bool MainWindow::readFile(QString fileName)

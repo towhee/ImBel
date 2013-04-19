@@ -1,1 +1,1 @@
-Fixed comboBoxTree to rename templates
+Signal for mouseOver now appears to be working.  Problem was release vs debug build.  Also implemented enum for model columns in DataModel.

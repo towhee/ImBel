@@ -2,7 +2,7 @@
 **File
 ***Width	1024px	FileWidth
 ***Height	800px	FileHeight
-***Sharpen amount	N/A	FileSharpenAmount
+***Sharpen amount	17	FileSharpenAmount
 ***File type	N/A	FileFileType
 ***Compression	N/A	FileCompression
 ***Colorspace	N/A	FileColorspace
