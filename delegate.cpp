@@ -29,10 +29,17 @@ void BaseDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     if (index.column() == 0) borderRect.setLeft(1);
     borderRect.setBottom(borderRect.bottom()+1);
 
+    QRect fillRect(borderRect);
+    fillRect.adjust(0, -1, 0, -1);
+
     if (fillAlternatingRows) {
-        QRect fillRect(borderRect);
-        fillRect.adjust(0, -1, 0, -1);
-        if (alternateRow) painter->fillRect(fillRect, Qt::green);
+        if (alternateRow) painter->fillRect(fillRect, Qt::lightGray);
+    }
+
+    // Paint background for description header items (like File, Image etc)
+    // They do not have an index therefore isValueRow = false
+    if (isValueRow == false) {
+        painter->fillRect(fillRect, QColor(98, 141, 191, 25));
     }
 
     // paint the borders a custom color
@@ -54,11 +61,26 @@ QSize BaseDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIn
         return(a);
 }
 
+bool WidgetDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
+                 const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    qDebug() << "WidgetDelegate::editorEvent: " << event->type() << "  Parent: " << this->parent();
+
+    //QAbstractItemView::edit(index);
+
+    return false;
+}
 
 QWidget* WidgetDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                               const QModelIndex &index) const
 {
-    qDebug() << "WidgetDelegate::createEditor";
+    qDebug() << "WidgetDelegate::createEditor - Parent = " << parent;
+    QModelIndex idx = index.model()->index(index.row(), 2, index.parent());
+    QString indexText = idx.model()->data(idx,Qt::DisplayRole).toString();
+    bool isValueRow = false;
+    if (indexText.length() > 0) isValueRow = true;
+    if (isValueRow == false) return 0;
+
     // determine type of widget from model (delegate column)
     QModelIndex idxD = index.model()->index(index.row(), 3, index.parent());
     QString delegateType = idxD.model()->data(idxD,Qt::DisplayRole).toString();
@@ -67,9 +89,6 @@ QWidget* WidgetDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
         editor->setFrame(true);
         editor->setMinimum(0);
         editor->setMaximum(100);
-        editor->setEnabled(true);   // nope
-        editor->setFocus();         // nope
-        editor->show();             // nope
         return editor;
     }
     if (delegateType == "Combobox") {
@@ -85,6 +104,7 @@ QWidget* WidgetDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
         QCheckBox *editor = new QCheckBox(parent);
         return editor;
     }
+    return 0;  // solution for now
     QStyledItemDelegate::createEditor(parent, option, index);
 }
 

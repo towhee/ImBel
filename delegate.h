@@ -55,6 +55,8 @@ public:
                       const QModelIndex &index) const;
     void updateEditorGeometry(QWidget *editor,
         const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    bool editorEvent(QEvent *event, QAbstractItemModel *model,
+                     const QStyleOptionViewItem &option, const QModelIndex &index);
 
 public slots:
     void on_BaseDelegate_MouseOver(const QModelIndex &index) const;

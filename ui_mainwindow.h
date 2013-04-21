@@ -354,7 +354,6 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(action_Run_test, SIGNAL(triggered()), MainWindow, SLOT(RunTest()));
         QObject::connect(actionShow_Templates, SIGNAL(triggered()), MainWindow, SLOT(toggleViewTemplateWidget()));
-        QObject::connect(actionShow_model_in_tree, SIGNAL(triggered()), MainWindow, SLOT(showModelInTree()));
         QObject::connect(actionAdd_a_new_template, SIGNAL(triggered()), MainWindow, SLOT(addTemplate()));
         QObject::connect(comboBoxTemplates, SIGNAL(currentIndexChanged(int)), MainWindow, SLOT(updateTreeViewTemplates()));
         QObject::connect(action_Expand_all_in_tree, SIGNAL(triggered()), MainWindow, SLOT(expandAllTreeTemplates()));

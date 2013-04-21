@@ -43,6 +43,7 @@
 
 #include "ui_mainwindow.h"
 #include "delegate.h"
+#include "propertyeditor.h"
 
 #include <QMainWindow>
 #include <QModelIndex>
@@ -50,7 +51,7 @@
 #include <QDataWidgetMapper>
 //#include <QStyledItemDelegate>
 
-class DataModel;
+//class DataModel;
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -63,40 +64,16 @@ public:
 
 private:
     void initImage();
-    void initTreeTemplate();
-    void initTreeCombobox();
-    void MainWindow::updateTreeViewTemplates(const QModelIndex &treeRootIndex);
-    void filterJustTemplates(const QModelIndex &node);
-    DataModel* dModel;
-    BaseDelegate *baseDelegate;
-    NoEditDelegate *noEditDelegate;
-    WidgetDelegate *widgetDelegate;
 
 public slots:
-    void updateActions();
+//    void updateActions();
     void RunTest();
+    void toggleViewTemplateWidget();
+//    void on_treeViewTemplate_mouseMove(const QModelIndex &index) const;
 
 private slots:
-    void insertChild();
-    bool insertColumn(const QModelIndex &parent = QModelIndex());
-    void insertRow();
-    bool removeColumn(const QModelIndex &parent = QModelIndex());
-    void removeRow();
-
-    void on_comboBoxTemplates_currentIndexChanged(const QString &arg1);
-    void on_treeViewTemplate_clicked(const QModelIndex &index);
-    void toggleViewTemplateWidget();
-    void addTemplate();
-    void addObject(QString name);
-    void addBorder();
-    void addText();
-    void addShape();
-    void addGraphic();
-    void showModelInTree();
     void expandAllTreeTemplates();
     void collapseAllTreeTemplates();
-    bool saveFile();
-    bool readFile(QString fileName);
 
 };
 

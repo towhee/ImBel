@@ -18,7 +18,8 @@ HEADERS     = mainwindow.h \
               ui_mainwindow.h \
               dataitem.h \
               datamodel.h \
-              delegate.h
+              delegate.h \
+    propertyeditor.h
 
 RESOURCES   = imbel.qrc
 
@@ -26,7 +27,8 @@ SOURCES     = mainwindow.cpp \
               dataitem.cpp \
               datamodel.cpp \
               main.cpp \
-              delegate.cpp
+              delegate.cpp \
+    propertyeditor.cpp
 
 OTHER_FILES += \
     ToDo.txt \

@@ -649,22 +649,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionShow_model_in_tree</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>showModelInTree()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>652</x>
-     <y>481</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionAdd_a_new_template</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>

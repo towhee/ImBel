@@ -23,4 +23,10 @@ alternate-background-color: rgb(176, 176, 176);
 Custom delegates
 ***************************************************************************
 
-Need to
+- QEvent
+
+- QAbstractItemView::edit
+
+- QModelIndex::flags()
+
+- Qt::ItemFlags  can (select, edit, drag etc)
