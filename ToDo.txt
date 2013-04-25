@@ -1,2 +1,8 @@
-Move insertChild et al to treemodel.cpp
-Rename node to index in fileterJustTemplates
+Review add/delete object logic - especially around numbering of objects
+Make adding object a variable ie add("Text") instead of addText()
+Finish creating delegate types
+Add value definitions to data structure matrix
+QString DataModel::getDelegate(const QModelIndex &index) const see comment to walk columns
+Save application state
+Done - Figure out how to fire event to update model if go directly from delegate to menu to save
+Done - Make non-value top level items bold (qabstractitemdelegate::paint)

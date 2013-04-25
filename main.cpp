@@ -41,12 +41,14 @@
 #include <QApplication>
 
 #include "mainwindow.h"
+#include "propertystyle.h"
 
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(imbel);
 
     QApplication app(argc, argv);
+    QApplication::setStyle(new PropertyStyle);
     MainWindow window;
     window.show();
     return app.exec();

@@ -57,7 +57,7 @@ class DataModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    DataModel(const QStringList &headers, const QString &data,
+    DataModel(const QString &data,
               QObject *parent = 0);
     ~DataModel();
 
@@ -97,15 +97,25 @@ public:
     void appendAttributeColumnData(QModelIndex & index);
     void WriteIndex( const QAbstractItemModel & model, const QModelIndex & index, QTextStream & stream, int level);
 
-    QList<QStringList> ds;   // Holds data struction
+//    QString dataStructureFile;      // Data structure text file name in resources
+    QList<QStringList> ds;          // Holds data struction
 
+/* Same enum in delegate.h - MUST UPDATE BOTH
+
+    1.  When creating a new column in data structure fill with "N/A"
+    2.  Update enum in both datamodel.h and delegate.h
+    3.  Update the header list in DataModel::DataModel
+    4.  Hide the new column in PropertyEditor::initTree
+    5.  Add column to DataModel::appendAttributeColumnData
+
+ */
     enum DSF                 // Data Structure Field
     {
-        D_LEVEL0, D_LEVEL1, D_LEVEL2, D_INDEX, D_DELEGATE, D_HELPTIP
+        D_LEVEL0, D_LEVEL1, D_LEVEL2, D_INDEX, D_DELEGATE, D_RANGE, D_HELPTIP
     };
     enum modelColumns
     {
-        M_ITEM, M_VALUE, M_INDEX, M_DELEGATE, M_HELPTIP
+        M_ITEM, M_VALUE, M_INDEX, M_DELEGATE, M_RANGE, M_HELPTIP
     };
 
     int dataStructureRows;      // ### required?
@@ -116,7 +126,7 @@ public:
     void show_ds();
 
 private:
-    void initDataStructure();
+    void initDataStructure(QString &dataStructureFile);
     void readFileData(const QStringList &lines, DataItemItem *parent);
     void pad(QString &text, int length);
     QString star(int count);

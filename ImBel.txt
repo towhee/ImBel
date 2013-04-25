@@ -1,84 +1,84 @@
-*Zenfolio 1024px
-**File
+*Zenfolio 1024px		
+**FILE		
 ***Width	1024px	FileWidth
 ***Height	800px	FileHeight
 ***Sharpen amount	17	FileSharpenAmount
-***File type	N/A	FileFileType
-***Compression	N/A	FileCompression
-***Colorspace	N/A	FileColorspace
-***File location logic	N/A	FileFileLocationLogic
-***Folder name	N/A	FileFolderName
-***File suffix	N/A	FileFileSuffix
-***Overwrite existing files	N/A	FileOverwriteExistingFiles
-**Image
+***File type	JPG	FileFileType
+***Compression	75	FileCompression
+***Colorspace	Adobe RGB	FileColorspace
+***File location logic	Absolute	FileFileLocationLogic
+***Folder name	d:\\data\my pictures\2013\04\2013-04-14	FileFolderName
+***File suffix	_RGH	FileFileSuffix
+***Overwrite existing files	TRUE	FileOverwriteExistingFiles
+**IMAGE		
 ***Style	N/A	ImageStyle
 ***Light direction	N/A	ImageLightDirection
 ***Light angle	N/A	ImageLightAngle
 ***Texture	N/A	ImageTexture
 ***Tint color	Purple	ImageTintColor
 ***Tint opacity	72%	ImageTintOpacity
-***Outside shadow
+***Outside shadow		
 ****Opacity	N/A	ImageOutsideShadowOpacity
 ****Blend mode	N/A	ImageOutsideShadowBlendMode
 ****Distance	N/A	ImageOutsideShadowDistance
 ****Color	N/A	ImageOutsideShadowColor
-***Inner shadow
+***Inner shadow		
 ****Opacity	N/A	ImageInnerShadowOpacity
 ****Blend mode	N/A	ImageInnerShadowBlendMode
 ****Distance	N/A	ImageInnerShadowDistance
 ****Color	N/A	ImageInnerShadowColor
-***Outer glow
+***Outer glow		
 ****Blend mode	N/A	ImageOuterGlowBlendMode
 ****Opacity	N/A	ImageOuterGlowOpacity
 ****Fade	N/A	ImageOuterGlowFade
 ****Distance	N/A	ImageOuterGlowDistance
-***Inner glow
+***Inner glow		
 ****Blend mode	N/A	ImageInnerGlowBlendMode
 ****Opacity	N/A	ImageInnerGlowOpacity
 ****Fade	N/A	ImageInnerGlowFade
 ****Distance	N/A	ImageInnerGlowDistance
-***Bevel
+***Bevel		
 ****Type	N/A	ImageBevelType
 ****Contour	N/A	ImageBevelContour
 ****Size	N/A	ImageBevelSize
 ****Softness	N/A	ImageBevelSoftness
-**Borders
-***Border1
+**BORDERS		
+***Border1		
 ****Style	Test border	BorderStyle
 ****Top	N/A	BorderTop
 ****Left	N/A	BorderLeft
 ****Right	N/A	BorderRight
 ****Bottom	N/A	BorderBottom
-****Outside shadow
+****Outside shadow		
 *****Opacity	N/A	BorderOutsideShadowOpacity
 *****Blend mode	N/A	BorderOutsideShadowBlendMode
 *****Distance	N/A	BorderOutsideShadowDistance
 *****Color	N/A	BorderOutsideShadowColor
-****Inner shadow
+****Inner shadow		
 *****Opacity	N/A	BorderInnerShadowOpacity
 *****Blend mode	N/A	BorderInnerShadowBlendMode
 *****Distance	N/A	BorderInnerShadowDistance
 *****Color	N/A	BorderInnerShadowColor
-****Outer glow
+****Outer glow		
 *****Blend mode	N/A	BorderOuterGlowBlendMode
 *****Opacity	N/A	BorderOuterGlowOpacity
 *****Fade	N/A	BorderOuterGlowFade
 *****Distance	N/A	BorderOuterGlowDistance
-****Inner glow
+****Inner glow		
 *****Blend mode	N/A	BorderInnerGlowBlendMode
 *****Opacity	N/A	BorderInnerGlowOpacity
 *****Fade	N/A	BorderInnerGlowFade
 *****Distance	N/A	BorderInnerGlowDistance
-****Bevel
+****Bevel		
 *****Type	N/A	BorderBevelType
 *****Contour	N/A	BorderBevelContour
 *****Size	N/A	BorderBevelSize
 *****Softness	N/A	BorderBevelSoftness
-**Texts
-**Shapes
-**Graphics
-*Zenfolio home page
-**File
+**TEXTS		
+**SHAPES		
+**GRAPHICS		
+*Zenfolio home page		
+**FILE		
 ***Width	N/A	FileWidth
 ***Height	N/A	FileHeight
 ***Sharpen amount	N/A	FileSharpenAmount
@@ -89,41 +89,41 @@
 ***Folder name	N/A	FileFolderName
 ***File suffix	N/A	FileFileSuffix
 ***Overwrite existing files	N/A	FileOverwriteExistingFiles
-**Image
+**IMAGE		
 ***Style	N/A	ImageStyle
 ***Light direction	N/A	ImageLightDirection
 ***Light angle	N/A	ImageLightAngle
 ***Texture	N/A	ImageTexture
 ***Tint color	N/A	ImageTintColor
 ***Tint opacity	N/A	ImageTintOpacity
-***Outside shadow
+***Outside shadow		
 ****Opacity	N/A	ImageOutsideShadowOpacity
 ****Blend mode	N/A	ImageOutsideShadowBlendMode
 ****Distance	N/A	ImageOutsideShadowDistance
 ****Color	N/A	ImageOutsideShadowColor
-***Inner shadow
+***Inner shadow		
 ****Opacity	N/A	ImageInnerShadowOpacity
 ****Blend mode	N/A	ImageInnerShadowBlendMode
 ****Distance	N/A	ImageInnerShadowDistance
 ****Color	N/A	ImageInnerShadowColor
-***Outer glow
+***Outer glow		
 ****Blend mode	N/A	ImageOuterGlowBlendMode
 ****Opacity	N/A	ImageOuterGlowOpacity
 ****Fade	N/A	ImageOuterGlowFade
 ****Distance	N/A	ImageOuterGlowDistance
-***Inner glow
+***Inner glow		
 ****Blend mode	N/A	ImageInnerGlowBlendMode
 ****Opacity	N/A	ImageInnerGlowOpacity
 ****Fade	N/A	ImageInnerGlowFade
 ****Distance	N/A	ImageInnerGlowDistance
-***Bevel
+***Bevel		
 ****Type	N/A	ImageBevelType
 ****Contour	N/A	ImageBevelContour
 ****Size	N/A	ImageBevelSize
 ****Softness	N/A	ImageBevelSoftness
-**Borders
-**Texts
-***Text1
+**BORDERS		
+**TEXTS		
+***Text1		
 ****Source	N/A	TextSource
 ****Text	This is the 2nd template	TextText
 ****Font	N/A	TextFont
@@ -131,17 +131,17 @@
 ****Color	N/A	TextColor
 ****Opacity	N/A	TextOpacity
 ****Blending mode	N/A	TextBlendingMode
-****Halo
+****Halo		
 *****Size	N/A	TextHaloSize
 *****Color	N/A	TextHaloColor
 *****Opacity	N/A	TextHaloOpacity
 *****Fade	N/A	TextHaloFade
-****Shadow
+****Shadow		
 *****Opacity	N/A	TextShadowOpacity
 *****Blend mode	N/A	TextShadowBlendMode
 *****Distance	N/A	TextShadowDistance
 *****Color	N/A	TextShadowColor
-****Location
+****Location		
 *****Reference object	N/A	TextLocationReferenceObject
 *****Reference portion	N/A	TextLocationReferencePortion
 *****Orientation	N/A	TextLocationOrientation
@@ -150,5 +150,5 @@
 *****Anchor from	N/A	TextLocationAnchorFrom
 *****Anchor to	N/A	TextLocationAnchorTo
 *****Orientation	N/A	TextLocationOrientation
-**Shapes
-**Graphics
+**SHAPES		
+**GRAPHICS		

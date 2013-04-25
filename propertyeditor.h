@@ -27,12 +27,19 @@ private:
     QComboBox *filterbox;
     DataModel *dModel;
 
-    BaseDelegate *baseDelegate;
-    NoEditDelegate *noEditDelegate;
-    WidgetDelegate *widgetDelegate;
+    PropertyDelegate *baseDelegate;
 
     void initTree();
     void updateTree(const QModelIndex &treeRootIndex);
+//    void updateActions();
+
+signals:
+    
+public slots:
+
+    void showModelInTree();
+    void on_tree_mouseMove(const QModelIndex &index) const;
+    void on_filterbox_currentIndexChanged();
     void addTemplate();
     void addObject(QString name);
     void addBorder();
@@ -41,21 +48,14 @@ private:
     void addGraphic();
     bool saveFile();
 
-signals:
-    
-public slots:
-
-    void showModelInTree();
-    void on_tree_mouseMove(const QModelIndex &index) const;
-
 //    void insertChild();
 //    bool insertColumn(const QModelIndex &parent = QModelIndex());
 //    void insertRow();
 //    bool removeColumn(const QModelIndex &parent = QModelIndex());
-//    void removeRow();
+    void removeRow();
+
 
 private slots:
-    void on_filterbox_currentIndexChanged(const QString &arg1);
     void on_tree_clicked(const QModelIndex &index);
     bool readFile(QString fileName);
 

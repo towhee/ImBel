@@ -2,6 +2,7 @@
 
 #include "mainwindow.h"
 #include "datamodel.h"
+#include "text.h"
 
 #include <QDebug>
 #include <QFile>
@@ -12,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupUi(this);
     this->tabifyDockWidget(dockWidgetTemplates, dockWidgetPreferences);
     dockWidgetTemplates->raise();
+    dockWidgetTemplates->resize(300, 0);
 
     QPixmap pixmap(":/Graphics/ImBel.png");
     this->setWindowIcon(pixmap);
@@ -21,18 +23,29 @@ MainWindow::MainWindow(QWidget *parent)
     initImage();
 
     PropertyEditor *propertyEditor = new PropertyEditor(treeViewTemplate, comboBoxTemplates,
-                                                  ":/ImBel.txt");
+                                                  "ImBel.txt");
 //    propertyEditor->showModelInTree();
 
     connect(actionShow_model_in_tree, SIGNAL(triggered()),
             propertyEditor, SLOT(showModelInTree()));
+    connect(comboBoxTemplates, SIGNAL(currentIndexChanged(int)),
+            propertyEditor, SLOT(on_filterbox_currentIndexChanged()));
+
+    connect(action_Save, SIGNAL(triggered()), propertyEditor, SLOT(saveFile()));
+    connect(actionAdd_a_new_template, SIGNAL(triggered()), propertyEditor, SLOT(addTemplate()));
+    connect(actionAdd_a_new_border, SIGNAL(triggered()), propertyEditor, SLOT(addBorder()));
+    connect(actionAdd_a_new_text, SIGNAL(triggered()), propertyEditor, SLOT(addText()));
+    connect(actionAdd_a_new_shape, SIGNAL(triggered()), propertyEditor, SLOT(addShape()));
+    connect(actionAdd_a_new_graphic, SIGNAL(triggered()), propertyEditor, SLOT(addGraphic()));
+
+    connect(removeRowAction, SIGNAL(triggered()), propertyEditor, SLOT(removeRow()));
 
     connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
-    connect(treeViewTemplate->selectionModel(),
-            SIGNAL(selectionChanged(const QItemSelection &,
-                                    const QItemSelection &)),
-            this, SLOT(updateActions()));
+//    connect(treeViewTemplate->selectionModel(),
+//            SIGNAL(selectionChanged(const QItemSelection &,
+//                                    const QItemSelection &)),
+//            this, SLOT(updateActions()));
 
 //    connect(actionsMenu, SIGNAL(aboutToShow()), this, SLOT(updateActions()));
 //    connect(insertRowAction, SIGNAL(triggered()), this, SLOT(insertRow()));
@@ -47,6 +60,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::RunTest()
 {
+//    Fonts *f = new Fonts;
+//    f->availableFonts();
 
 //    qDebug() << fileText;
 }

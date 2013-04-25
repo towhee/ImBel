@@ -30,3 +30,16 @@ Custom delegates
 - QModelIndex::flags()
 
 - Qt::ItemFlags  can (select, edit, drag etc)
+
+***************************************************************************
+Commit issue
+***************************************************************************
+
+editorevent
+qitemdelegate
+QStyleOptionViewItem widget
+stardelegate.cpp example
+sender() ??
+qobject_cast ??
+http://doc.qt.digia.com/4.7/properties.html  user property
+

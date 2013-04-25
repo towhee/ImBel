@@ -5,15 +5,27 @@
 #include "datamodel.h"
 
 //! [0]
-DataModel::DataModel(const QStringList &headers, const QString &data, QObject *parent)
+DataModel::DataModel(const QString &fileName, QObject *parent)
     : QAbstractItemModel(parent)
 {
     // Build the array ds[][] that holds the data structure for each template
     // object: file, image, border, text, shape and graphic.  This is used to build
-    // new objects (file, image, border, text, shape and graphic)
-    initDataStructure();
+    // new objects (file, image, border, text, shape and graphic) and define delegates.
+    QString fileCore = fileName.mid(0, fileName.indexOf("."));
+    QString dataStructureFile = QString(":/%1 Data Structure.txt").arg(fileCore);
+    initDataStructure(dataStructureFile);
+
+    // Headers must match the enum DSF and the DataModel constructor!
+    QStringList headers;
+    headers << tr("Item") << tr("Value") << tr("Index")
+            << tr("Delegate") << tr("Range") << tr("HelpTip");
 
     // Read data from data file into the model
+    QFile file(fileName);
+    file.open(QIODevice::ReadOnly);
+    QString data = file.readAll();
+    file.close();
+
     // Start with the headers
     QVector<QVariant> rootData;
     foreach (QString header, headers)
@@ -21,7 +33,7 @@ DataModel::DataModel(const QStringList &headers, const QString &data, QObject *p
 
     // create the root
     rootItem = new DataItemItem(rootData);
-    rootItem->insertChildren(0, 1, 5);
+    rootItem->insertChildren(0, 1, headers.length());
     rootItem->child(0)->setData(0, "root");
 
     // populate the model from the data file
@@ -47,13 +59,13 @@ int DataModel::columnCount(const QModelIndex & /* parent */) const
 QVariant DataModel::data(const QModelIndex &index, int role) const
 {
 {/*
-    The data structure:
+    The data columns:
 
-    data(0) = item description
-    data(1) = item value
-    data(2) = item string index (concat of all generation item descriptions
-    data(3) = item delegate to use
-    data(4) = item help tip
+    M_ITEM     = item description
+    M_VALUE    = item value
+    M_INDEX    = item string index (concat of all generation item descriptions
+    M_DELEGATE = item delegate to use
+    M_HELPTIP  = item help tip
  */}
     if (!index.isValid())
         return QVariant();
@@ -286,7 +298,9 @@ void DataModel::readFileData(const QStringList &lines, DataItemItem *parent)
                 }
             }
 
-            // Append a new item to the current parent's list of children.
+            // Append a new item to the current parent's list of children.  If the
+            // value is "N/A" then replace with "" in model.  "N/A" is a surogate for
+            // no value in the tab deliminated data files.
             DataItemItem *parent = parents.last();
             parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
             for (int column = 0; column < columnData.size(); ++column){
@@ -299,16 +313,17 @@ void DataModel::readFileData(const QStringList &lines, DataItemItem *parent)
     }
 }
 
+// ### convert these two functions into one that walks the columns
 QString DataModel::getDelegate(const QModelIndex &index) const
 {
     DataItemItem *item = getItem(index);
-    return item->data(3).toString();
+    return item->data(M_DELEGATE).toString();
 }
 
 QString DataModel::getHelpTip(const QModelIndex &index) const
 {
     DataItemItem *item = getItem(index);
-    return item->data(4).toString();
+    return item->data(M_HELPTIP).toString();
 }
 
 QModelIndex DataModel::findModelRow(QModelIndex &startRow, QString name)
@@ -328,6 +343,7 @@ QString DataModel::star(int count)
 
 void DataModel::serializeModelData(const QModelIndex &idx, int level, QString &fileText)
 {
+
     QString objectText = this->data(idx, Qt::DisplayRole).toString();
     QModelIndex idx1 = this->index(idx.row(), M_VALUE, idx.parent());
     QString valueText = this->data(idx1, Qt::DisplayRole).toString();
@@ -344,6 +360,7 @@ void DataModel::serializeModelData(const QModelIndex &idx, int level, QString &f
             rowText.append(QString("\t%1").arg(indexText));
         }
         rowText.append("\n");
+        qDebug() << "DataModel::serializeModelData: " << rowText;
         fileText.append(rowText);
     }
 
@@ -355,7 +372,7 @@ void DataModel::serializeModelData(const QModelIndex &idx, int level, QString &f
     }
 }
 
-void DataModel::initDataStructure()
+void DataModel::initDataStructure(QString &dataStructureFile)
 {
     /*
     The data for each template is stored in a file called ImBel.txt.  It holds the tree structure
@@ -374,7 +391,8 @@ void DataModel::initDataStructure()
 
               Search for the appropriate INDEX to find the right row, then get column
     */
-    QFile file(":/ImBel Data Structure.txt");
+//    QFile file(":/ImBel Data Structure.txt");
+    QFile file(dataStructureFile);
     file.open(QIODevice::ReadOnly);
     QString dsTxt = file.readAll();
     QStringList lines = dsTxt.split(QString("\n"));
@@ -468,14 +486,15 @@ void DataModel::addTemplateObjectToModel(QModelIndex &parent, QString objectName
     }
     // Append the passed index to the template item
     // If it is a border, text, shape or graphic find out how many already exist
-    // and append a number ie Border6
+    // and append a number ie Border #6
     QString objectTreeName = objectName;
 
     DataItemItem *rootItem = getItem(parent);
+    // insertChildren(int position, int count, int columns) // why use 3 ?? ###
     rootItem->insertChildren(rootItem->childCount(), 1, 3);
     QRegExp rx("^(Border|Text|Shape|Graphic)$");
     if (rx.exactMatch(objectName) == true)
-        objectTreeName.append(QString("%1").arg(rootItem->childCount()));
+        objectTreeName.append(QString(" #%1").arg(rootItem->childCount()));
     rootItem->child(rootItem->childCount() - 1)->setData(0, objectTreeName);
     // Point to the new item1
     DataItemItem *parentItem1 = rootItem->child(rootItem->childCount()-1);
@@ -565,9 +584,11 @@ void DataModel::appendAttributeColumnData(QModelIndex &index)
     // only attributes with values have an INDEX description.
     if (rowIndex.length() > 0) {
         int rowDS = findRowInDS(rowIndex);
-        QModelIndex delegateIndex = index.model()->index(index.row(), 3, index.parent());
-        QModelIndex helptipIndex = index.model()->index(index.row(), 4, index.parent());
+        QModelIndex delegateIndex = index.model()->index(index.row(), M_DELEGATE, index.parent());
+        QModelIndex rangeIndex = index.model()->index(index.row(), M_RANGE, index.parent());
+        QModelIndex helptipIndex = index.model()->index(index.row(), M_HELPTIP, index.parent());
         this->setData(delegateIndex, ds[rowDS][D_DELEGATE]);
+        this->setData(rangeIndex, ds[rowDS][D_RANGE]);
         this->setData(helptipIndex, ds[rowDS][D_HELPTIP]);
     }
     if (hasChildren(index)){

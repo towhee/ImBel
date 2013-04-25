@@ -9,19 +9,9 @@ PropertyEditor::PropertyEditor(QTreeView *treeView, QComboBox *combobox,
     tree = treeView;
     filterbox = combobox;
 
-    // Headers must match the enum DSF and the DataModel constructor!
-    QStringList headers;
-    headers << tr("Item") << tr("Value") << tr("Index")
-            << tr("Delegate") << tr("HelpTip");
+    dModel = new DataModel(fileName);
 
-    QFile file(fileName);
-    file.open(QIODevice::ReadOnly);
-    dModel = new DataModel(headers, file.readAll());
-    file.close();
-
-    noEditDelegate = new NoEditDelegate(this);
-    baseDelegate = new BaseDelegate(this);
-    widgetDelegate = new WidgetDelegate(this);
+    baseDelegate = new PropertyDelegate(this);
 
     initTree();
 
@@ -61,33 +51,30 @@ void PropertyEditor::initTree()
 {
 
     tree->setModel(dModel);
+    // hide the header row
     tree->setRowHidden(0, QModelIndex(),true);
-    tree->collapseAll();
     tree->setColumnWidth(0, 150);
-    tree->setColumnWidth(1, 100);
+    tree->setColumnWidth(1, 150);
     tree->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);  // does not help
     tree->header()->setStretchLastSection(true);
     tree->setColumnHidden(2, true);           // hide the index column
     tree->setColumnHidden(3, true);           // hide the delegate column
-    tree->setColumnHidden(4, true);           // hide the helptip column
+    tree->setColumnHidden(4, true);           // hide the range column
+    tree->setColumnHidden(5, true);           // hide the helptip column
     tree->setRootIsDecorated(true);
     tree->setEditTriggers(QAbstractItemView::AllEditTriggers);
-    int c1 = tree->columnWidth(0);
-    int c2 = tree->columnWidth(1);
 
     tree->setItemDelegate(baseDelegate);
-    tree->setItemDelegateForColumn(0, noEditDelegate);
-    tree->setItemDelegateForColumn(1, widgetDelegate);
 
     QModelIndex rootIndex = dModel->index(0,0,QModelIndex());
     filterbox->setModel(dModel);
     filterbox->setRootModelIndex(rootIndex);
     filterbox->setCurrentIndex(0);
-
 }
 
-void PropertyEditor::on_filterbox_currentIndexChanged(const QString &arg1)
+void PropertyEditor::on_filterbox_currentIndexChanged()
 {
+    qDebug() << "PropertyEditor::on_filterbox_currentIndexChanged()";
     int comboRow = filterbox->currentIndex();
     QModelIndex rootIndex = dModel->index(0,0,QModelIndex());
     updateTree(rootIndex.child(comboRow,0));
@@ -96,6 +83,8 @@ void PropertyEditor::on_filterbox_currentIndexChanged(const QString &arg1)
 void PropertyEditor::updateTree(const QModelIndex &treeRootIndex)
 {
     tree->setRootIndex(treeRootIndex);
+    tree->expandAll();
+
 }
 
 void PropertyEditor::on_tree_mouseMove(const QModelIndex &index) const
@@ -125,7 +114,7 @@ void PropertyEditor::addTemplate()
         for (int i = 0; i < filterbox->count(); ++i){
             QString s = filterbox->itemData(i, Qt::DisplayRole).toString();
             if (s.startsWith("New Template"))
-                    ++newTemplateCount;
+                 ++newTemplateCount;
         }
 
     }
@@ -135,7 +124,8 @@ void PropertyEditor::addTemplate()
        as it is a model view.  Changing the comboBox index triggers
        :on_filterbox_currentIndexChanged, which in turn, updates the
        template treeview. */
-    filterbox->setCurrentIndex(filterbox->model()->rowCount()-1);
+//    filterbox->setCurrentIndex(filterbox->model()->rowCount()-1);
+    filterbox->setCurrentIndex(filterbox->count()-1);
 }
 
 void PropertyEditor::addObject(QString name)
@@ -245,13 +235,14 @@ void PropertyEditor::addGraphic()
 //    return changed;
 //}
 
-//void PropertyEditor::removeRow()
-//{
-//    QModelIndex index = tree->selectionModel()->currentIndex();
-//    QAbstractItemModel *model = tree->model();
+void PropertyEditor::removeRow()
+{
+    QModelIndex index = tree->selectionModel()->currentIndex();
+    QAbstractItemModel *model = tree->model();
+    model->removeRow(index.row(), index.parent());
 //    if (model->removeRow(index.row(), index.parent()))
 //        updateActions();
-//}
+}
 
 //void PropertyEditor::updateActions()
 //{
@@ -280,7 +271,7 @@ bool PropertyEditor::saveFile()
     QModelIndex modelRootIndex = dModel->index(0,0,QModelIndex());
     QString fileText;
     dModel->serializeModelData(modelRootIndex, 0, fileText);
-    qDebug() << fileText;
+    qDebug() << "PropertyEditor::saveFile: " << fileText;
 //    return true;
     QFile file("ImBel.txt");
     if (!file.open(QIODevice::WriteOnly))

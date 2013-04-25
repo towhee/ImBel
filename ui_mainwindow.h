@@ -181,7 +181,12 @@ public:
         MainWindow->setStatusBar(statusbar);
         dockWidgetTemplates = new QDockWidget(MainWindow);
         dockWidgetTemplates->setObjectName(QStringLiteral("dockWidgetTemplates"));
-        dockWidgetTemplates->setMinimumSize(QSize(300, 192));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(dockWidgetTemplates->sizePolicy().hasHeightForWidth());
+        dockWidgetTemplates->setSizePolicy(sizePolicy);
+        dockWidgetTemplates->setMinimumSize(QSize(300, 117));
         dockWidgetTemplates->setBaseSize(QSize(0, 0));
         dockWidgetTemplates->setLocale(QLocale(QLocale::English, QLocale::Canada));
         dockWidgetContents_3 = new QWidget();
@@ -200,11 +205,11 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         frameToolButtons = new QFrame(frameTreeTemplates);
         frameToolButtons->setObjectName(QStringLiteral("frameToolButtons"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(frameToolButtons->sizePolicy().hasHeightForWidth());
-        frameToolButtons->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(frameToolButtons->sizePolicy().hasHeightForWidth());
+        frameToolButtons->setSizePolicy(sizePolicy1);
         frameToolButtons->setMaximumSize(QSize(16777215, 0));
         frameToolButtons->setFrameShape(QFrame::StyledPanel);
         frameToolButtons->setFrameShadow(QFrame::Raised);
@@ -222,11 +227,11 @@ public:
 
         frame_2 = new QFrame(frameTreeTemplates);
         frame_2->setObjectName(QStringLiteral("frame_2"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(frame_2->sizePolicy().hasHeightForWidth());
-        frame_2->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(frame_2->sizePolicy().hasHeightForWidth());
+        frame_2->setSizePolicy(sizePolicy2);
         frame_2->setMaximumSize(QSize(16777215, 25));
         frame_2->setSizeIncrement(QSize(0, 0));
         frame_2->setFrameShape(QFrame::StyledPanel);
@@ -237,11 +242,11 @@ public:
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         comboBoxTemplates = new QComboBox(frame_2);
         comboBoxTemplates->setObjectName(QStringLiteral("comboBoxTemplates"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(comboBoxTemplates->sizePolicy().hasHeightForWidth());
-        comboBoxTemplates->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(comboBoxTemplates->sizePolicy().hasHeightForWidth());
+        comboBoxTemplates->setSizePolicy(sizePolicy3);
         comboBoxTemplates->setMinimumSize(QSize(0, 0));
         comboBoxTemplates->setEditable(true);
         comboBoxTemplates->setInsertPolicy(QComboBox::InsertAtCurrent);
@@ -283,11 +288,8 @@ public:
 
         treeViewTemplate = new QTreeView(frameTreeTemplates);
         treeViewTemplate->setObjectName(QStringLiteral("treeViewTemplate"));
-        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(treeViewTemplate->sizePolicy().hasHeightForWidth());
-        treeViewTemplate->setSizePolicy(sizePolicy3);
+        sizePolicy.setHeightForWidth(treeViewTemplate->sizePolicy().hasHeightForWidth());
+        treeViewTemplate->setSizePolicy(sizePolicy);
         treeViewTemplate->setMinimumSize(QSize(300, 0));
         treeViewTemplate->setSizeIncrement(QSize(0, 0));
         treeViewTemplate->setBaseSize(QSize(0, 0));
@@ -300,7 +302,7 @@ public:
         treeViewTemplate->setIndentation(10);
         treeViewTemplate->setRootIsDecorated(false);
         treeViewTemplate->setWordWrap(true);
-        treeViewTemplate->header()->setDefaultSectionSize(150);
+        treeViewTemplate->header()->setDefaultSectionSize(25);
 
         verticalLayout->addWidget(treeViewTemplate);
 
@@ -314,6 +316,7 @@ public:
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
         dockWidgetPreferences = new QDockWidget(MainWindow);
         dockWidgetPreferences->setObjectName(QStringLiteral("dockWidgetPreferences"));
+        dockWidgetPreferences->setMinimumSize(QSize(0, 0));
         dockWidgetContents = new QWidget();
         dockWidgetContents->setObjectName(QStringLiteral("dockWidgetContents"));
         dockWidgetPreferences->setWidget(dockWidgetContents);
@@ -354,17 +357,10 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(action_Run_test, SIGNAL(triggered()), MainWindow, SLOT(RunTest()));
         QObject::connect(actionShow_Templates, SIGNAL(triggered()), MainWindow, SLOT(toggleViewTemplateWidget()));
-        QObject::connect(actionAdd_a_new_template, SIGNAL(triggered()), MainWindow, SLOT(addTemplate()));
-        QObject::connect(comboBoxTemplates, SIGNAL(currentIndexChanged(int)), MainWindow, SLOT(updateTreeViewTemplates()));
         QObject::connect(action_Expand_all_in_tree, SIGNAL(triggered()), MainWindow, SLOT(expandAllTreeTemplates()));
         QObject::connect(action_Collapse_all_in_tree, SIGNAL(triggered()), MainWindow, SLOT(collapseAllTreeTemplates()));
-        QObject::connect(actionAdd_a_new_border, SIGNAL(triggered()), MainWindow, SLOT(addBorder()));
-        QObject::connect(actionAdd_a_new_text, SIGNAL(triggered()), MainWindow, SLOT(addText()));
-        QObject::connect(actionAdd_a_new_shape, SIGNAL(triggered()), MainWindow, SLOT(addShape()));
-        QObject::connect(actionAdd_a_new_graphic, SIGNAL(triggered()), MainWindow, SLOT(addGraphic()));
         QObject::connect(toolButtonExpandAll, SIGNAL(clicked()), MainWindow, SLOT(expandAllTreeTemplates()));
         QObject::connect(toolButtonCollapseAll, SIGNAL(clicked()), MainWindow, SLOT(collapseAllTreeTemplates()));
-        QObject::connect(action_Save, SIGNAL(triggered()), MainWindow, SLOT(saveFile()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi

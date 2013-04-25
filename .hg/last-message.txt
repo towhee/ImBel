@@ -1,2 +1,1 @@
-Tweaked delegate painter to show non-value rows in blue, fixed createEditor 
-to not edit non-value rows.
+Refactored BaseDelegate to PropertyDelegate
